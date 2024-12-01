@@ -1,0 +1,105 @@
+[{
+  "_id": {
+    "$oid": "63bfc162595658c78d86ef6c"
+  },
+  "title": "ایلستریتور",
+  "slug": "illustrator",
+  "image": "/images/categories/illustrator3-min.png",
+  "imageAlt": "illustrator",
+  "situation": true,
+  "shortDesc": "توضیحات کوتاه",
+  "date": "۱۴۰۱/۱۰/۲۴،‏ ۱۱:۳۲",
+  "__v": 0,
+  "typeOfProduct": "gr"
+},{
+  "_id": {
+    "$oid": "63bfc91b595658c78d86efa9"
+  },
+  "title": "فوتوشاپ",
+  "slug": "photoshop",
+  "image": "/images/categories/photoshop2-min.png",
+  "imageAlt": "فوتوشاپ و گرافیک",
+  "situation": true,
+  "shortDesc": "فوتوشاپ و گرافیک",
+  "date": "۱۴۰۱/۱۱/۱۲،‏ ۰۹:۱۰",
+  "__v": 0,
+  "typeOfProduct": "gr"
+},{
+  "_id": {
+    "$oid": "63bfc952595658c78d86efaf"
+  },
+  "title": "پریمیر",
+  "slug": "premiere",
+  "image": "/images/categories/clapperboard-min.png",
+  "imageAlt": "پریمیر و ویدئو",
+  "situation": true,
+  "shortDesc": "پریمیر و ویدئو",
+  "date": "۱۴۰۱/۱۱/۱۲،‏ ۰۹:۱۰",
+  "__v": 0,
+  "typeOfProduct": "gr"
+},{
+  "_id": {
+    "$oid": "63bfc9da595658c78d86efbb"
+  },
+  "title": "ریاضیات",
+  "slug": "math-books",
+  "image": "/images/categories/calculator-min.png",
+  "imageAlt": "کتاب های ریاضیات",
+  "situation": true,
+  "shortDesc": "کتاب های ریاضیات",
+  "date": "۱۴۰۱/۱۱/۱۲،‏ ۰۹:۰۹",
+  "__v": 0,
+  "typeOfProduct": "book"
+},{
+  "_id": {
+    "$oid": "63bfca04595658c78d86efc1"
+  },
+  "title": "رمان و داستان",
+  "slug": "novels",
+  "image": "/images/categories/value1-min.png",
+  "imageAlt": "رمان و داستان",
+  "situation": true,
+  "shortDesc": "رمان و داستان",
+  "date": "۱۴۰۱/۱۰/۲۴،‏ ۱۱:۳۱",
+  "__v": 0,
+  "typeOfProduct": "book"
+},{
+  "_id": {
+    "$oid": "63bfcdb3be55c7a62f55511e"
+  },
+  "title": "اپ گرافیکی",
+  "slug": "graphic-programs",
+  "image": "/images/categories/view-min.png",
+  "imageAlt": "نرم افزار های گرافیکی",
+  "situation": true,
+  "shortDesc": "توضیحات کوتاه نرم افزا",
+  "date": "۱۴۰۱/۱۱/۱۲،‏ ۰۹:۰۹",
+  "__v": 0,
+  "typeOfProduct": "app"
+},{
+  "_id": {
+    "$oid": "63da03cb880406740642eec2"
+  },
+  "title": "موسیقی",
+  "slug": "musics",
+  "image": "/images/categories/music-min.png",
+  "imageAlt": "موسیقی و آهنگ",
+  "situation": true,
+  "shortDesc": "دسته موسیقی فروشگاه فایل",
+  "typeOfProduct": "app",
+  "date": "۱۴۰۱/۱۱/۱۲،‏ ۱۱:۱۵",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63da042a880406740642eeea"
+  },
+  "title": "اپ برنامه ریز",
+  "slug": "programmer-app",
+  "image": "/images/categories/list1-min.png",
+  "imageAlt": "اپلیکیشن های برنامه ریزی",
+  "situation": true,
+  "shortDesc": "مسنتیخبهشاسخیهابجخشسهایبب",
+  "typeOfProduct": "app",
+  "date": "۱۴۰۱/۱۱/۱۲،‏ ۱۱:۳۴",
+  "__v": 0
+}]

@@ -1,0 +1,34 @@
+[{
+  "_id": {
+    "$oid": "63ba8ab47330a8b064c4cfca"
+  },
+  "image": "/images/slider/slide2.jpg",
+  "imageAlt": "اسلایدر 2",
+  "situation": true,
+  "link": "dashboard",
+  "sorter": 3,
+  "date": "۱۴۰۲/۲/۳۰, ۰۹:۵۸",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63ba8ad57330a8b064c4cfcc"
+  },
+  "image": "/images/slider/slide3.jpg",
+  "imageAlt": "اسلایدر 1",
+  "situation": true,
+  "link": "https://mernfa.ir",
+  "sorter": 1,
+  "date": "۱۴۰۱/۱۰/۲۲،‏ ۰۹:۵۹",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63ba8ae47330a8b064c4cfce"
+  },
+  "image": "/images/slider/slide1.jpg",
+  "imageAlt": "اسلایدر 3",
+  "situation": true,
+  "link": "help",
+  "sorter": 2,
+  "date": "۱۴۰۲/۲/۳۰, ۰۹:۵۹",
+  "__v": 0
+}]
