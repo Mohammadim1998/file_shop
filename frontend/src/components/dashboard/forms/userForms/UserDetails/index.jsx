@@ -13,12 +13,18 @@ const UserDetails = ({ goalId }) => {
     const userIsAciveRef = useRef();
     const emailSendRef = useRef();
     const activateCodeRef = useRef();
+    const activateCodeSendingNumberRef = useRef();
 
     const formKeyNotSuber = (event) => {
         if (event.key == "Enter") {
             event.preventDefault();
         }
     };
+
+    //PRICE BEAUTIFUL
+    function priceChanger(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
     // RELATED
     const [posts, setPosts] = useState([-1]);
@@ -53,6 +59,7 @@ const UserDetails = ({ goalId }) => {
             userIsAcive: userIsAciveRef.current.value,
             activateCode: activateCodeRef.current.value,
             emailSend: emailSendRef.current.value,
+            activateCodeSendingNumber: activateCodeSendingNumberRef.current.value,
         }
 
         const url = `https://file-server.liara.run/api/update-user/${goalId}`;
@@ -87,6 +94,34 @@ const UserDetails = ({ goalId }) => {
         axios.post(`https://file-server.liara.run/api/delete-user/${goalId}`)
             .then(d => {
                 toast.success("کاربر با موفقیت حذف شد.", {
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            })
+            .catch((e) => {
+                let message = "متاسفانه ناموفق بود";
+                if (e.response.data.msg) {
+                    message = e.response.data.msg;
+                }
+                toast.error(message, {
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            })
+    };
+
+    const unchecker = (goalId) => {
+        axios.get(`https://file-server.liara.run/api/uncheck-payment/${goalId}`)
+            .then(d => {
+                toast.success("به بخش سفارش ها افزوده شد", {
                     autoClose: 3000,
                     hideProgressBar: false,
                     closeOnClick: true,
@@ -172,6 +207,11 @@ const UserDetails = ({ goalId }) => {
                     <input defaultValue={fullData.activateCode ? fullData.activateCode : ""} required={true} ref={activateCodeRef} type="text" className="inputLtr p-2 rounded-md w-full outline-none border-2 border-zinc-300 focus:border-orange-400" />
                 </div>
 
+                <div className="flex flex-col gap-6">
+                    <div>تعداد باقی مانده ارسال کد فعال سازی به کاربر</div>
+                    <input defaultValue={fullData.activateCodeSendingNumber ? fullData.activateCodeSendingNumber : 0} required={true} ref={activateCodeSendingNumberRef} type="text" className="inputLtr p-2 rounded-md w-full outline-none border-2 border-zinc-300 focus:border-orange-400" />
+                </div>
+
                 <div className="flex flex-col gap-2">
                     <div>محصولات مورد علاقه</div>
                     {fullData.favoriteProducts?.length < 1
@@ -192,6 +232,97 @@ const UserDetails = ({ goalId }) => {
                                                 <div>{da.title}</div>
                                             </div>
                                             <div className="flex justify-end"><Link target={"_blank"} href={`/shop/${da.slug}`} className="rounded flex justify-center items-center w-12 h-6 text-xs bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300"></Link></div>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        )}
+                </div>
+
+                <div className="flex flex-col gap-2">
+                    <div>سبد خرید</div>
+                    {fullData.cart?.length < 1
+                        ? (
+                            <div>بدون محصول مورد علاقه</div>
+                        ) : (
+                            <div className="flex justify-start items-center gap-4 text-xs flex-wrap">
+                                {
+                                    fullData.cart?.map((da, i) => (
+                                        <div key={i} className="bg-zinc-200 rounded-md p-4 flex flex-col gap-4">
+                                            <div className="flex justify-between items-center gap-2">
+                                                <div>آیدی: </div>
+                                                <div>{da._id}</div>
+                                            </div>
+
+                                            <div className="flex justify-between items-center gap-2">
+                                                <div>عنوان: </div>
+                                                <div>{da.title}</div>
+                                            </div>
+                                            <div className="flex justify-end"><Link target={"_blank"} href={`/shop/${da.slug}`} className="rounded flex justify-center items-center w-12 h-6 text-xs bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300"></Link></div>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        )}
+                </div>
+
+                <div className="flex flex-col gap-2">
+                    <div>محصولات خریداری شده</div>
+                    {fullData.userProducts?.length < 1
+                        ? (
+                            <div>بدون محصول محصول خریداری شده</div>
+                        ) : (
+                            <div className="flex justify-start items-center gap-4 text-xs flex-wrap">
+                                {
+                                    fullData.userProducts?.map((da, i) => (
+                                        <div key={i} className="bg-zinc-200 rounded-md p-4 flex flex-col gap-4">
+                                            <div className="flex justify-between items-center gap-2">
+                                                <div>آیدی: </div>
+                                                <div>{da._id}</div>
+                                            </div>
+
+                                            <div className="flex justify-between items-center gap-2">
+                                                <div>عنوان: </div>
+                                                <div>{da.title}</div>
+                                            </div>
+                                            <div className="flex justify-end"><Link target={"_blank"} href={`/shop/${da.slug}`} className="rounded flex justify-center items-center w-12 h-6 text-xs bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300"></Link></div>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        )}
+                </div>
+
+                <div className="flex flex-col gap-2">
+                    <div>سفارش ها</div>
+                    {fullData.payments?.length < 1
+                        ? (
+                            <div>بدون سفارش</div>
+                        ) : (
+                            <div className="flex justify-start items-center gap-4 text-xs flex-wrap">
+                                {
+                                    fullData.payments?.map((da, i) => (
+                                        <div key={i} className="bg-zinc-200 rounded-md p-4 flex flex-col gap-4">
+                                            <div className="flex justify-between items-center gap-2">
+                                                <div>مبلغ: </div>
+                                                <div>{priceChanger(da.amount / 10)} تومان</div>
+                                            </div>
+
+                                            <div className="flex justify-between items-center gap-2">
+                                                <div>وضعیت</div>
+                                                <div>{da.payed == true ? "پرداخت شده" : "پرداخت نشده"}</div>
+                                            </div>
+
+                                            <div className="flex justify-between items-center gap-2">
+                                                <div>تاریخ</div>
+                                                <div>{da.createdAt}</div>
+                                            </div>
+
+                                            <div onClick={() => unchecker(da._id)} className="cursor-pointer bg-blue-600 text-white rounded p-1 text-sm">
+                                                نمایش در بخش سفارش ها
+                                            </div>
+
+                                            {/* <div className="flex justify-end"><Link target={"_blank"} href={`/shop/${da.slug}`} className="rounded flex justify-center items-center w-12 h-6 text-xs bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300"></Link></div> */}
                                         </div>
                                     ))
                                 }

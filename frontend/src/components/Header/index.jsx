@@ -8,16 +8,21 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { MdFavoriteBorder } from "react-icons/md";
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { useAppContext } from "@/context/appContext";
 
 const Header = () => {
     const [logoHover, setLogoHover] = useState(0);
+    // const [cartNumber, setcartNumber] = useState(-1);
     const searchRef = useRef();
     const router = useRouter();
+
+    //CONTEXT OF CART NUMBER
+    const {cartNumber} = useAppContext();
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -137,7 +142,13 @@ const Header = () => {
                             </div>
 
                             <Link href={"/cart"} className="flex gap-2 justify-center items-center bg-orange-400 p-2 rounded-md">
-                                <div className="text-orange-500 bg-white rounded-full w-8 h-8 flex justify-center items-center">2</div>
+                                <div className="text-orange-500 bg-white rounded-full w-8 h-8 flex justify-center items-center">
+                                    {cartNumber == -1
+                                        ? <div className="flex justify-center items-center p-1">
+                                            <Image alt="loading" width={20} height={20} src={"/loading.svg"} />
+                                        </div>
+                                        : cartNumber}
+                                </div>
                                 <div className="text-white">سبد خرید</div>
                                 <div className="text-orange-500 bg-white rounded-lg w-8 h-8 flex justify-center items-center">
                                     <AiOutlineShoppingCart className="w-6 h-6" />

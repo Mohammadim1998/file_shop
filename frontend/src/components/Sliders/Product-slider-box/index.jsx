@@ -9,9 +9,14 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { useAppContext } from "@/context/appContext";
 
 const ProductSliderBox = ({ itemData }) => {
     const [auth_cookie, setauth_cookie] = useState(Cookies.get("auth_cookie"));
+
+    //CONTEXT OF CART NUMBER
+    const { cartNumber, setCartNumber } = useAppContext();
+
     //PRICE BEAUTIFUL
     function priceChanger(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -49,10 +54,46 @@ const ProductSliderBox = ({ itemData }) => {
                     progress: undefined,
                 })
             })
+    };
+
+    //User cart Products
+    const cartAdder = () => {
+        const productData = {
+            method: "push",
+            newCartProduct: itemData._id,
+        };
+        const backendUrl = `https://file-server.liara.run/api/cart-managment`;
+        axios.post(backendUrl, productData, { headers: { auth_cookie: auth_cookie } })
+            .then((d) => {
+                console.log(d.data);
+                Cookies.set('auth_cookie', d.data.auth, { expires: 60 });
+                const message = d.data.msg ? d.data.msg : "با موفقیت به سبد خرید افزوده شد"
+                toast.success(message, {
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+                // setBulkEmailSituation(input)
+                setCartNumber(cartNumber + 1);
+            })
+            .catch((err) => {
+                const errorMsg = (err.response && err.response.data && err.response.data.msg) ? err.response.data.msg : "خطا"
+                toast.error(errorMsg, {
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            })
     }
 
     return (
-        <article className="sliderItem p-2 hover:pt-0 transition-all duration-300">
+        <article className="sliderItem p-2 hover:-translate-y-2 transition-all duration-300">
             <div className="relative bg-white h-[24rem] w-72 rounded-lg shadow-[0px_1px_10px_rgba(0,0,0,0.25)] hover:shadow-[0px_1px_8px_rgba(0,0,0,0.5)] ">
                 <Link
                     href={`/shop/${itemData.slug}`}
@@ -107,7 +148,7 @@ const ProductSliderBox = ({ itemData }) => {
                             </div>
 
                             <div className="flex gap-2 justify-end items-center">
-                                <HiOutlineShoppingCart className="mr-1 w-9 h-9 p-2 rounded bg-zinc-200 text-indigo-600 cursor-pointer transition-all duration-300 hover:bg-orange-400 hover:text-white" />
+                                <HiOutlineShoppingCart onClick={() => cartAdder()} className="mr-1 w-9 h-9 p-2 rounded bg-zinc-200 text-indigo-600 cursor-pointer transition-all duration-300 hover:bg-orange-400 hover:text-white" />
                                 <div className="bg-zinc-500 ml-2 text-white h-9 px-1 flex justify-center items-center rounded-tr-md rounded-br-md">{priceChanger(itemData.price)}</div>
                             </div>
                         </div>

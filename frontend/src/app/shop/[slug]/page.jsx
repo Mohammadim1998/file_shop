@@ -4,7 +4,8 @@ import Image from "next/image";
 import { TiTickOutline } from "react-icons/ti";
 import Link from "next/link";
 import { cookies } from "next/headers";
-import SingleProductFav from "@/components/SingleProductFav";
+import AddToFav from "@/components/AddToFav";
+import AddToCart from "@/components/AddToCart";
 
 const getData = async (slug) => {
    const data = await fetch(
@@ -162,11 +163,16 @@ const SingleProduct = async ({ params }) => {
             </main>
             <aside className=" w-80 max-w-80 rounded-md flex flex-col gap-8">
                <div className=" flex flex-col gap-8">
-                  <button className=" flex justify-center items-center text-center rounded-md p-2 w-full bg-orange-500 transition-all duration-300 hover:bg-orange-600 text-white">{priceChanger(data.price)} تومان - افزودن به سبد خرید</button>
-                  <SingleProductFav data={data._id} />
+                  {/* <button className=" flex justify-center items-center text-center rounded-md p-2 w-full bg-orange-500 transition-all duration-300 hover:bg-orange-600 text-white">{priceChanger(data.price)} تومان - افزودن به سبد خرید</button> */}
+                  <AddToCart data={data._id} />
+                  <AddToFav data={data._id} />
                </div>
                <div className=" rounded-lg p-3 shadow-[0px_0px_8px_rgba(0,0,0,0.35)]">
                   <ul className=" flex flex-col gap-4">
+                     <li className=" flex justify-between items-center">
+                        <span>قیمت محصول</span>
+                        <span className="text-blue-500 text-base">{priceChanger(data.price)}</span>
+                     </li>
                      <li className=" flex justify-between items-center">
                         <span>تعداد خرید</span>
                         <span>{data.buyNumber}</span>

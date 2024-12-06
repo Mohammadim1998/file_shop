@@ -7,6 +7,8 @@ import PostForms from "../forms/postForms"
 import CategoryForms from "../forms/categoryForms"
 import ProductForms from "../forms/ProductForms"
 import UserForms from "../forms/userForms"
+import PaymentForms from "../forms/PaymentForms"
+import CommentForms from "../forms/CommentForms"
 
 const MainDashboard = () => {
     const [contentChanger, setcontentChanger] = useState("midBan");
@@ -25,6 +27,10 @@ const MainDashboard = () => {
             setDetails(<ProductForms />);
         } else if (contentChanger === "users") {
             setDetails(<UserForms />);
+        } else if (contentChanger === "payments") {
+            setDetails(<PaymentForms />);
+        } else if (contentChanger === "comments") {
+            setDetails(<CommentForms />);
         }
     }, [contentChanger]);
 

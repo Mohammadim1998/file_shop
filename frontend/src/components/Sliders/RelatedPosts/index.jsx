@@ -65,12 +65,11 @@ const RelatedPosts = ({ typeOfModel, title, relPostsData }) => {
                                                 ))
 
                                                 : relModelDataState.map((po, i) => (
-                                                    po.typeOfProduct == "gr" ?
-                                                        <GraphicSliderBox itemData={po} key={i} />
-                                                        : <ProductSliderBox itemData={po} key={i} />
+                                                    // po.typeOfProduct == "gr" ?
+                                                    <GraphicSliderBox itemData={po} key={i} />
+                                                    // : <ProductSliderBox itemData={po} key={i} />
                                                 ))
-                                        )
-                            }
+                                        )}
                         </div>
                     </div>
                 </div>

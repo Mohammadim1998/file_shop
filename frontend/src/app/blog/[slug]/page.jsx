@@ -7,6 +7,7 @@ import Link from "next/link";
 import { IoSendOutline } from "react-icons/io5";
 import MostViewedposts from "@/components/MostViewedposts";
 import SearchBlog from "@/components/SearchBlog";
+import CommentManager from "@/components/commentManager";
 
 const getData = async (slug) => {
     const data = await fetch(`https://file-server.liara.run/api/get-post/${slug}`, { cache: "no-store" });
@@ -15,6 +16,7 @@ const getData = async (slug) => {
 
 const SingleBlog = async ({ params }) => {
     const data = await getData(params.slug);
+    const commentProps = {src_id:data._id,typeOfModel:"post"};
 
     return (
         <div className="flex justify-between items-start container mx-auto gap-2">
@@ -72,6 +74,8 @@ const SingleBlog = async ({ params }) => {
                     <section className="">
                         <RelatedPosts typeOfModel={"post"} relPostsData={data.relatedPosts} title={"مقالات مرتبط"} />
                     </section>
+
+                    <CommentManager commentProps={commentProps} />
 
                 </div>
             </main>

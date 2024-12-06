@@ -13,6 +13,8 @@ const DashboardCtrl = ({ setcontentChanger }) => {
                 <DCBtn title={"دسته ها"} content={"categories"} setcontentChanger={setcontentChanger} colorChanger={colorChanger} setColorChanger={setColorChanger} />
                 <DCBtn title={"محصولات"} content={"products"} setcontentChanger={setcontentChanger} colorChanger={colorChanger} setColorChanger={setColorChanger} />
                 <DCBtn title={"کاربرها"} content={"users"} setcontentChanger={setcontentChanger} colorChanger={colorChanger} setColorChanger={setColorChanger} />
+                <DCBtn title={"سفارش ها"} content={"payments"} setcontentChanger={setcontentChanger} colorChanger={colorChanger} setColorChanger={setColorChanger} />
+                <DCBtn title={"دیدگاه ها"} content={"comments"} setcontentChanger={setcontentChanger} colorChanger={colorChanger} setColorChanger={setColorChanger} />
             </div>
         </div>
     );

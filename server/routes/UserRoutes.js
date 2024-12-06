@@ -9,6 +9,7 @@ const User = require('../models/User');
 
 // EXPRESS RATE LIMIT
 const rateLimit = require('express-rate-limit');
+const userExist = require('../middlewares/userExist');
 const loginRegisterLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 5,
@@ -74,7 +75,7 @@ router.post("/delete-user/:id", UserCtrl.deleteUser);
 // for admin
 router.get("/get-user/:id", UserCtrl.getOneUserById);
 // for user
-router.get("/get-user-data", UserCtrl.getUserDataAccount);
+router.get("/get-user-data",userExist, UserCtrl.getUserDataAccount);
 router.get("/get-user-admin-data", UserCtrl.getUserAdminData);
 
 router.post("/search-user", [

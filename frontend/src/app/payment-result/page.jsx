@@ -1,4 +1,4 @@
-import AccountMain from "@/components/Account/AccountMain";
+import PaymentResultcom from "@/components/PaymentResultcom";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -12,16 +12,16 @@ const getAuthData = async (cookieValue) => {
     }
 }
 
-const page = async ({params}) => {
+const page = async ({searchParams}) => {
     const cookieStore = cookies();
     const auth_cookie = cookieStore.get("auth_cookie");
     const cookieValue = auth_cookie?.value;
     const data = await getAuthData(cookieValue);
 
     return (
-        <div className="container mx-auto flex justify-center items-center">
-            <AccountMain items={params} />
-        </div>
+        <section className="container mx-auto p-12 flex justify-center items-center">
+            <PaymentResultcom searchParams={searchParams} cookie={cookieValue} />
+        </section>
     );
 }
 

@@ -6,7 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 
-const SingleProductFav = ({ data }) => {
+const AddToFav = ({ data }) => {
     const [auth_cookie, setauth_cookie] = useState(Cookies.get("auth_cookie"));
 
     //User Favorite Products
@@ -20,7 +20,7 @@ const SingleProductFav = ({ data }) => {
             .then((d) => {
                 console.log(d.data);
                 Cookies.set('auth_cookie', d.data.auth, { expires: 60 });
-                const message = d.data.msg ? d.data.msg : "تغییر اطلاعات شما با موفقیت انجام شد."
+                const message = d.data.msg ? d.data.msg : "با موفقیت به محصولات مورد علاقه افزوده شد"
                 toast.success(message, {
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -64,4 +64,4 @@ const SingleProductFav = ({ data }) => {
     );
 }
 
-export default SingleProductFav;
+export default AddToFav;

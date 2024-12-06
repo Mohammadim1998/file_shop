@@ -15,7 +15,7 @@ const ProductSchema = new mongoose.Schema({
     slug: {
         required: true,
         type: String,
-        unique:true
+        // unique:true
     },
     mainFile: {
         required: true,

@@ -15,7 +15,7 @@ const PostSchema = new mongoose.Schema({
     slug: {
         required: true,
         type: String,
-        unique:true
+        // unique:true
     },
     image: {
         required: true,

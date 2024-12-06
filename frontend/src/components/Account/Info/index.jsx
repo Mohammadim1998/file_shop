@@ -32,7 +32,7 @@ const Info = ({ cookie }) => {
                         progress: undefined,
                     });
                 })
-                setNeedRefresh(0);
+            setNeedRefresh(0);
         }
     }, [cookie, needRefresh]);
 
@@ -115,6 +115,38 @@ const Info = ({ cookie }) => {
             })
     }
 
+    //SEND EMAIL ACTIVATION CODE AGAIN
+    const emailAcitvationCodeAgain = () => {
+        const backendUrl = `https://file-server.liara.run/api/user-activation-code-again`;
+        axios.post(backendUrl, { item: 1 }, {
+            headers: { auth_cookie: cookie },
+        })
+            .then((d) => {
+                console.log(d.data);
+                const message = d.data.msg ? d.data.msg : "ایمیل دوباره ارسال شد"
+                toast.success(message, {
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+                setNeedRefresh(1);
+            })
+            .catch((err) => {
+                const errorMsg = (err.response && err.response.data && err.response.data.msg) ? err.response.data.msg : "خطا"
+                toast.error(errorMsg, {
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            })
+    }
+
     const [bulkEmailSituation, setBulkEmailSituation] = useState(true);
     const bulkEmailChanger = (input) => {
         const formData = {
@@ -156,23 +188,34 @@ const Info = ({ cookie }) => {
     }
 
     return (
-        <div>
+        <div className="relative flex flex-col gap-8 pt-8">
+            <h3 className="absolute top-1 ring-1 text-lg">اطلاعات من</h3>
+
+            <div onClick={() => {
+                setNeedRefresh(1);
+                setData([-1]);
+            }} className="absolute top-1 left-1 cursor-pointer text-white bg-indigo-500 rounded flex text-sm justify-center items-center gap-1 w-24 h-10">
+                <FiRefreshCw />
+                به روزرسانی
+            </div>
+
             <div>
                 {data[0] == -1
                     ? (<div className="flex justify-center items-center p-12">
                         <Image alt="loading" width={120} height={120} src={"/loading.svg"} />
                     </div>)
                     : (
-                        <div className="relative flex flex-col gap-8">
-                            <div onClick={() => {
-                                setNeedRefresh(1);
-                                setData([-1]);
-                            }} className="absolute top-1 left-1 cursor-pointer text-white bg-indigo-500 rounded flex text-sm justify-center items-center gap-1 w-24 h-10"><FiRefreshCw />به روزرسانی</div>
+                        <div className="flex flex-col gap-8">
                             {data.userIsAcive == false
                                 ? (
                                     <div className="flex flex-col gap-8 bg-zinc-200 w-full text-sm rounded-md p-4">
                                         <form onSubmit={userEmailConfirmer} className="flex flex-col gap-8 items-center">
-                                            <div>کد تایید حساب کاربری</div>
+
+                                            <div className="w-full flex justify-between items-center gap-4">
+                                                <h3 className="text-lg">کدتایید حساب کاربری</h3>
+                                                <div onClick={() => emailAcitvationCodeAgain()} className="cursor-pointer bg-sky-600 text-white rounded px-4 py-2 transition-all duration-300 hover:bg-sky-700 text-xs">ارسال دوباره ایمیل ( {data.activatecodeSendingNumber} )</div>
+                                            </div>
+
                                             <input
                                                 ref={activateCodeRef}
                                                 type="text"

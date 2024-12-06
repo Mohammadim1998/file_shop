@@ -3,6 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaArrowUp } from "react-icons/fa";
 import { TfiAngleLeft } from "react-icons/tfi";
+import { useAppContext } from "@/context/appContext";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { HiOutlineArrowUp, HiShoppingCart } from "react-icons/hi";
 
 const Footer = () => {
     const goTopCtrl = () => {
@@ -11,6 +14,9 @@ const Footer = () => {
             behavior: "smooth",
         });
     };
+
+    //CONTEXT OF CART NUMBER
+    const { cartNumber } = useAppContext();
 
     return (
         <footer className="container mx-auto flex flex-col gap-8 py-6 mt-8">
@@ -104,10 +110,21 @@ const Footer = () => {
                 <p className="text-center w-full">
                     تمامی حقوق مادی و معنوی این وبسایت متعلق به مرن فا میباشد. mernfa.ir
                 </p>
-                <FaArrowUp
+                <HiOutlineArrowUp
                     onClick={() => goTopCtrl()}
                     className="fixed left-4 bottom-4 cursor-pointer border-2 border-black w-12 h-12 p-2 rounded-md bg-yellow-500 transition-all duration-500 hover:bg-indigo-400"
                 />
+
+                <Link href={"/cart"} className="fixed ring-4 bottom-4">
+                    <div className="relative">
+                        <div className="z-50 absolute -top-4 -right-4 flex justify-center items-center rounded-full w-8 h-8 p-2 bg-indigo-600 text-white">{cartNumber == -1 ? "" : cartNumber}</div>
+                        <HiShoppingCart
+                            onClick={() => goTopCtrl()}
+                            className="z-40 border-2 border-black w-12 h-12 p-2 rounded-md bg-yellow-500 transition-all duration-500 hover:bg-indigo-400 text-black"
+                        />
+                    </div>
+                </Link>
+
             </div>
         </footer>
     );
