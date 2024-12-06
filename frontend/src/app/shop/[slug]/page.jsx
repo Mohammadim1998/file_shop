@@ -6,6 +6,8 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import AddToFav from "@/components/AddToFav";
 import AddToCart from "@/components/AddToCart";
+import CommentManager from "@/components/commentManager";
+import ProductShopCommentNum from "@/components/ProductPost-ShopCommentNum/ProductShopCommentNum";
 
 const getData = async (slug) => {
    const data = await fetch(
@@ -29,6 +31,8 @@ const SingleProduct = async ({ params }) => {
    const cookieStore = cookies();
    const auth_cookie = cookieStore.get("auth_cookie");
    const cookieValue = (auth_cookie && auth_cookie.value) ? auth_cookie.value : undefined;
+
+   const commentProps = { src_id: data._id, typeOfModel: "product" };
 
    return (
       <div className=" flex justify-between items-start container mx-auto gap-4">
@@ -155,10 +159,7 @@ const SingleProduct = async ({ params }) => {
                      <RelatedPosts typeOfModel={data.typeOfModel} relPostsData={data.relatedProducts} title={"محصولات مرتبط"} />
                   </section>
 
-                  <section className=" flex flex-col gap-6">
-                     <h2 className=" text-xl">دیدگاه ها</h2>
-                     <form className=" bg-zinc-700 rounded-md h-48">1</form>
-                  </section>
+                  <CommentManager commentProps={commentProps} />
                </div>
             </main>
             <aside className=" w-80 max-w-80 rounded-md flex flex-col gap-8">
@@ -177,10 +178,7 @@ const SingleProduct = async ({ params }) => {
                         <span>تعداد خرید</span>
                         <span>{data.buyNumber}</span>
                      </li>
-                     <li className=" flex justify-between items-center">
-                        <span>تعداد بازدید</span>
-                        <span>{data.pageView}</span>
-                     </li>
+                     <ProductShopCommentNum goalId={data._id} />
                      <li className=" flex justify-between items-center">
                         <span>تعداد دیدگاه</span>
                         <span>{data.comments.length}</span>

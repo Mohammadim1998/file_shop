@@ -33,7 +33,7 @@ const Box = ({ data, setMidBanDetCtrl, setRandomNumForBannerClick }) => {
                     {
                         data.viewed == true
                             ? <div></div>
-                            : <div className="bg-blue-600 text-xs text-white px-3 py-1 rounded">جدید</div>
+                            : <div className="bg-green-600 text-xs text-white px-3 py-1 rounded">جدید</div>
                     }
                 </div>
             </div>

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import AllComments from "./AllComments";
 import CommentDetails from "./CommentDetails";
+import AllNewComments from "./AllComments/AllNewComments";
 
 const CommentMain = () => {
     const [midBanDetCtrl, setMidBanDetCtrl] = useState("");
@@ -24,6 +25,11 @@ const CommentMain = () => {
                     <button onClick={() => setDet(<AllComments setMidBanDetCtrl={setMidBanDetCtrl} setRandomNumForBannerClick={setRandomNumForBannerClick} />)}
                         className="flex justify-center items-center w-32 h-10 rounded-md bg-indigo-600 text-white transition-all duration-500 hover:bg-orange-500">
                         همه
+                    </button>
+
+                    <button onClick={() => setDet(<AllNewComments setMidBanDetCtrl={setMidBanDetCtrl} setRandomNumForBannerClick={setRandomNumForBannerClick} />)}
+                        className="flex justify-center items-center w-32 h-10 rounded-md bg-indigo-600 text-white transition-all duration-500 hover:bg-orange-500">
+                        جدید
                     </button>
                 </div>
             </section>

@@ -9,7 +9,7 @@ const CommentBox = ({ data, commentProps }) => {
     const [childrenDisplayer, setChildrenDisplayer] = useState(1);
 
     return (
-        <div className="bg-zinc-100 border-2 border-zinc-400 p-2 rounded-md flex flex-col gap-2">
+        <div className="relative bg-zinc-100 border-2 border-zinc-400 p-2 rounded-md flex flex-col gap-2">
             <div className="flex justify-between items-center flex-wrap">
                 <div className="px-2 py-1 rounded bg-zinc-200">{data.displayname}</div>
                 <div className="px-2 py-1 rounded bg-orange-500 text-white">{data.createdAt}</div>
@@ -25,7 +25,7 @@ const CommentBox = ({ data, commentProps }) => {
             <div className="">
                 {
                     replyDisplayer == 1
-                        ? <div></div>
+                        ? <div className="absolute bottom-0 left-0 h-0 w-0"></div>
                         : <NewComment commentProps={commentProps} text={"ثبت پاسخ"} itemParentId={data._id} />
                 }
             </div>
@@ -33,7 +33,7 @@ const CommentBox = ({ data, commentProps }) => {
             <div className="">
                 {
                     childrenDisplayer == 1
-                        ? <div></div>
+                        ? <div className="absolute bottom-0 left-0 h-0 w-0"></div>
                         : <CommentReplyesList goalId={data._id} commentProps={commentProps} />
                 }
             </div>

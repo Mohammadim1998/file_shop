@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Box from "./box";
 import Image from "next/image";
 
-const AllPayments = ({ setMidBanDetCtrl, setRandomNumForBannerClick }) => {
+const allNewPayments = ({ setMidBanDetCtrl, setRandomNumForBannerClick }) => {
     const goTopCtrl = () => {
         window.scrollTo({
             top: 0,
@@ -20,7 +20,7 @@ const AllPayments = ({ setMidBanDetCtrl, setRandomNumForBannerClick }) => {
     const paginate = 2;
 
     useEffect(() => {
-        axios.get(`https://file-server.liara.run/api/payments?pn=${pageNumber}&&pgn=${paginate}`)
+        axios.get(`https://file-server.liara.run/api/not-viewed-payments?pn=${pageNumber}&&pgn=${paginate}`)
             .then(d => {
                 setPayments(d.data.GoalUsers);
                 setNumbersOfBtns(Array.from(Array(Math.ceil(d.data.AllUsersNum / paginate)).keys()));
@@ -51,7 +51,7 @@ const AllPayments = ({ setMidBanDetCtrl, setRandomNumForBannerClick }) => {
     return (
         <div className="flex flex-col gap-8">
             <div className="flex justify-between items-center">
-                <div>همه سفارش ها</div>
+                <div>سفارش های جدید (دیده نشده)</div>
                 <div className="w-32 h-10 rounded bg-indigo-500 text-white flex justify-center items-center">{allPaymentsNumber} سفارش</div>
             </div>
             <div className="flex flex-col gap-6">
@@ -102,4 +102,4 @@ const AllPayments = ({ setMidBanDetCtrl, setRandomNumForBannerClick }) => {
     );
 }
 
-export default AllPayments;
+export default allNewPayments;

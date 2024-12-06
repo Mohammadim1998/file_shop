@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import AllPayments from "./AllPayments";
 import PaymentDetails from "./PaymentDetails";
+import AllNewPayments from "./AllPayments/allNewPayments";
 
 const PaymentsMain = () => {
     const [midBanDetCtrl, setMidBanDetCtrl] = useState("");
@@ -24,6 +25,10 @@ const PaymentsMain = () => {
                     <button onClick={() => setDet(<AllPayments setMidBanDetCtrl={setMidBanDetCtrl} setRandomNumForBannerClick={setRandomNumForBannerClick} />)}
                         className="flex justify-center items-center w-32 h-10 rounded-md bg-indigo-600 text-white transition-all duration-500 hover:bg-orange-500">
                         همه
+                    </button>
+                    <button onClick={() => setDet(<AllNewPayments setMidBanDetCtrl={setMidBanDetCtrl} setRandomNumForBannerClick={setRandomNumForBannerClick} />)}
+                        className="flex justify-center items-center w-32 h-10 rounded-md bg-indigo-600 text-white transition-all duration-500 hover:bg-orange-500">
+                        جدید
                     </button>
                 </div>
             </section>

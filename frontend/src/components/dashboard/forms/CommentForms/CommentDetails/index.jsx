@@ -201,18 +201,22 @@ const CommentDetails = ({ goalId }) => {
                     <input defaultValue={fullData.displayname ? fullData.displayname : ""} required={true} ref={displaynameRef} type="text" className="p-2 rounded-md w-full outline-none border-2 border-zinc-300 focus:border-orange-400" />
                 </div>
 
-                <div className="flex flex-col gap-6">
-                    <div>دیدگاه پدر</div>
-                    <div className="bg-zinc-100 border-2 border-zinc-300 p-1 rounded-md flex flex-col gap-2">
-                        <div className="flex justify-between items-center flex-wrap">
-                            <div className="px-2 py-1 rounded bg-zinc-200">{fullData.parent.displayname}</div>
-                            <div className="px-2 py-1 rounded bg-zinc-200">{fullData.parent.email}</div>
-                            <div className="px-2 py-1 rounded bg-orange-500 text-white">{fullData.parent.createdAt}</div>
-                        </div>
+                {fullData.parenId == "nothing"
+                    ? <div></div>
+                    : (
+                        <div className="flex flex-col gap-6">
+                            <div>دیدگاه پدر</div>
+                            <div className="bg-zinc-100 border-2 border-zinc-300 p-1 rounded-md flex flex-col gap-2">
+                                <div className="flex justify-between items-center flex-wrap">
+                                    <div className="px-2 py-1 rounded bg-zinc-200">{fullData.parent.displayname}</div>
+                                    <div className="px-2 py-1 rounded bg-zinc-200">{fullData.parent.email}</div>
+                                    <div className="px-2 py-1 rounded bg-orange-500 text-white">{fullData.parent.createdAt}</div>
+                                </div>
 
-                        <p className="text-black leading-9 text-justify p-2">{fullData.parent.message}</p>
-                    </div>
-                </div>
+                                <p className="text-black leading-9 text-justify p-2">{fullData.parent.message}</p>
+                            </div>
+                        </div>)}
+
 
                 <div className="flex flex-col gap-2">
                     <div>متن دیدگاه</div>
@@ -226,7 +230,7 @@ const CommentDetails = ({ goalId }) => {
                 </div>
 
                 <button type="submit" className="bg-indigo-600 text-white w-full p-2 rounded-md transition-all duration-500 hover:bg-orange-500">ارسال</button>
-            </form>
+            </form >
             <ToastContainer
                 bodyClassName={() => "font-[shabnam] text-sm flex items-center"}
                 position="top-right"
@@ -240,7 +244,7 @@ const CommentDetails = ({ goalId }) => {
                 draggable
                 pauseOnHover
             />
-        </div>
+        </div >
     );
 }
 

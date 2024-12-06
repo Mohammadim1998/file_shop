@@ -119,7 +119,7 @@ const Favorites = ({ cookie }) => {
 
     return (
         <div className="relative flex flex-col gap-8 p-20">
-             <h3 className="absolute top-1 ring-1 text-lg">محصولات مورد علاقه من</h3>
+            <h3 className="absolute top-1 ring-1 text-lg">محصولات مورد علاقه من</h3>
 
             <div onClick={() => {
                 setNeedRefresh(1);
@@ -133,83 +133,90 @@ const Favorites = ({ cookie }) => {
                         <Image alt="loading" width={120} height={120} src={"/loading.svg"} />
                     </div>)
                     : (
-                        <div>
-                            {data.length < 1}
-                            ? <div className="w-full flex justify-center items-center p-8">محصولی موجود نیست...</div>
-                            :(<div className="w-full flex flex-col gap-8">
-                                {data.map((da, i) => (
-                                    <div key={i} className="w-full flex flex-col gap-4 bg-zinc-200 text-sm h-10 rounded-md p-4 relative">
-                                        <div className="flex justify-between items-start gap-4">
-                                            <div className="flex justify-center items-center pt-2">
-                                                <Image
-                                                    width={270}
-                                                    height={150}
-                                                    className="rounded-md"
-                                                    src={da.image}
-                                                    alt={"محصول مورد علاقه"}
-                                                />
+                        <div className="flex flex-col gap-4">
+                            <div className="flex justify-end items-center w-full">
+                                <div className="rounded-md flex justify-center items-center bg-orange-600 w-20 h-10 text-white">{data.length} محصول</div>
+                            </div>
+
+                            <div>
+                                <div>
+                                    {data.length < 1}
+                                    ? <div className="w-full flex justify-center items-center p-8">محصولی موجود نیست...</div>
+                                    :(<div className="w-full flex flex-col gap-8">
+                                        {data.map((da, i) => (
+                                            <div key={i} className="w-full flex flex-col gap-4 bg-zinc-200 text-sm h-10 rounded-md p-4 relative">
+                                                <div className="flex justify-between items-start gap-4">
+                                                    <div className="flex justify-center items-center pt-2">
+                                                        <Image
+                                                            width={270}
+                                                            height={150}
+                                                            className="rounded-md"
+                                                            src={da.image}
+                                                            alt={"محصول مورد علاقه"}
+                                                        />
+                                                    </div>
+
+                                                    <div className="relative w-full flex flex-col gap-4">
+                                                        <Link
+                                                            href={`/shop/${da.slug}`}
+                                                            target={"_blank"}
+                                                            className="absolute top-1 left-1 rounded-sm flex justify-center items-center text-xs w-20 h-6 bg-green-600 text-white transition-all duration-300 hover:bg-green-600 pt-2"
+                                                        >
+                                                            لینک محصول
+                                                        </Link>
+
+                                                        <div className="cursor-pointer absolute top-1 left-20 bg-indigo-500 text-white rounded-sm text-xs flex justify-center items-center w-20 h-6">
+                                                            {da.typeOfProduct == "gr" ? (
+                                                                <div>فایل گرافیکی</div>
+                                                            ) : da.typeOfProduct == "app" ? (
+                                                                <div>اپلیکیشن</div>
+                                                            ) : (
+                                                                <div>کتاب</div>
+                                                            )}
+                                                        </div>
+
+                                                        <div onClick={() => cartAdder(da._id)} className="cursor-pointer absolute top-1 left-48 bg-blue-500 text-white transition-all duration-300 hover:bg-blue-600 rounded-sm text-xs flex justify-center items-center w-24 h-6">
+                                                            افزودن به سبد
+                                                        </div>
+
+                                                        <h3>{da.title}</h3>
+                                                        <p>{da.shortDesc}</p>
+                                                        <div className="flex justify-start items-center gap-4">
+                                                            <div>{da.buyNumber} فروش</div>
+                                                            <div>{priceChanger(da.price)} تومان</div>
+                                                        </div>
+
+                                                        <div className="w-[95%] h-[0.16rem] bg-zinc-400 rounded-md"></div>
+
+                                                        <div className="">{
+                                                            da.features.length < 1
+                                                                ? (
+                                                                    <div className="flex justify-center items-center w-full p-4">بدون ویژگی</div>
+                                                                ) : (
+                                                                    da.features.map((fe, i) => (
+                                                                        <div key={i} className="flex justify-start items-center  gap-6">
+                                                                            <div className="w-40 flex justify-start items-center gap-1">
+                                                                                {spliterForFeatures(fe)[0]}
+                                                                            </div>
+                                                                            <div>
+                                                                                {spliterForFeatures(fe)[1]}
+                                                                            </div>
+                                                                        </div>
+                                                                    ))
+                                                                )}
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div onClick={() => productRemover(da._id)} className="absolute bottom-2 left-2 w-16 h-6 flex justify-center items-center gap-2 rounded bg-rose-600 text-white hover:bg-rose-700 transition-all duration-300">حذف <RiDeleteBin6Line /></div>
+
                                             </div>
-
-                                            <div className="relative w-full flex flex-col gap-4">
-                                                <Link
-                                                    href={`/shop/${da.slug}`}
-                                                    target={"_blank"}
-                                                    className="absolute top-1 left-1 rounded-sm flex justify-center items-center text-xs w-20 h-6 bg-green-600 text-white transition-all duration-300 hover:bg-green-600 pt-2"
-                                                >
-                                                    لینک محصول
-                                                </Link>
-
-                                                <div className="cursor-pointer absolute top-1 left-20 bg-indigo-500 text-white rounded-sm text-xs flex justify-center items-center w-20 h-6">
-                                                    {da.typeOfProduct == "gr" ? (
-                                                        <div>فایل گرافیکی</div>
-                                                    ) : da.typeOfProduct == "app" ? (
-                                                        <div>اپلیکیشن</div>
-                                                    ) : (
-                                                        <div>کتاب</div>
-                                                    )}
-                                                </div>
-
-                                                <div onClick={() => cartAdder(da._id)} className="cursor-pointer absolute top-1 left-48 bg-blue-500 text-white transition-all duration-300 hover:bg-blue-600 rounded-sm text-xs flex justify-center items-center w-24 h-6">
-                                                    افزودن به سبد
-                                                </div>
-
-                                                <h3>{da.title}</h3>
-                                                <p>{da.shortDesc}</p>
-                                                <div className="flex justify-start items-center gap-4">
-                                                    <div>{da.buyNumber} فروش</div>
-                                                    <div>{priceChanger(da.price)} تومان</div>
-                                                </div>
-
-                                                <div className="w-[95%] h-[0.16rem] bg-zinc-400 rounded-md"></div>
-
-                                                <div className="">{
-                                                    da.features.length < 1
-                                                        ? (
-                                                            <div className="flex justify-center items-center w-full p-4">بدون ویژگی</div>
-                                                        ) : (
-                                                            da.features.map((fe, i) => (
-                                                                <div key={i} className="flex justify-start items-center  gap-6">
-                                                                    <div className="w-40 flex justify-start items-center gap-1">
-                                                                        {spliterForFeatures(fe)[0]}
-                                                                    </div>
-                                                                    <div>
-                                                                        {spliterForFeatures(fe)[1]}
-                                                                    </div>
-                                                                </div>
-                                                            ))
-                                                        )}
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-                                        <div onClick={() => productRemover(da._id)} className="absolute bottom-2 left-2 w-16 h-6 flex justify-center items-center gap-2 rounded bg-rose-600 text-white hover:bg-rose-700 transition-all duration-300">حذف <RiDeleteBin6Line /></div>
-
-                                    </div>
-                                ))
-                                }
-                            </div>)
-
+                                        ))
+                                        }
+                                    </div>)
+                                </div>
+                            </div>
                         </div>
                     )}
             </div>

@@ -50,7 +50,8 @@ const AllComments = ({ setMidBanDetCtrl, setRandomNumForBannerClick }) => {
 
     return (
         <div className="flex flex-col gap-8">
-            <div className="flex justify-end">
+            <div className="flex justify-between items-center">
+            <div>همه دیدگاه ها</div>
                 <div className="w-32 h-10 rounded bg-indigo-500 text-white flex justify-center items-center">{allCommentsNumber} سفارش</div>
             </div>
             <div className="flex flex-col gap-6">

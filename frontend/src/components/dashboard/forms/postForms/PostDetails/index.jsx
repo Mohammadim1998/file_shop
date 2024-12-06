@@ -147,7 +147,7 @@ const PostDetails = ({ goalId }) => {
             <div className="flex justify-between items-center">
                 <h2 className="text-orange-500">جزئیات پست</h2>
                 <div className="flex justify-end items-center gap-4">
-                    <Link href={`/blog/${fullData.slug}`} className="bg-blue-600 text-white px-4 py-1 rounded-md text-sm transition-all duration-500">لینک پست</Link>
+                    <Link target="_blank" href={`/blog/${fullData.slug}`} className="bg-blue-600 text-white px-4 py-1 rounded-md text-sm transition-all duration-500">لینک پست</Link>
                     <button onClick={() => remover()} className="bg-rose-600 text-white px-4 py-1 rounded-sm text-xs">حذف</button>
                 </div>
             </div>

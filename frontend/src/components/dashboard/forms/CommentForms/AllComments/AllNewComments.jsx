@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Box from "./box";
 import Image from "next/image";
 
-const AllPayments = ({ setMidBanDetCtrl, setRandomNumForBannerClick }) => {
+const AllNewComments = ({ setMidBanDetCtrl, setRandomNumForBannerClick }) => {
     const goTopCtrl = () => {
         window.scrollTo({
             top: 0,
@@ -12,19 +12,19 @@ const AllPayments = ({ setMidBanDetCtrl, setRandomNumForBannerClick }) => {
         });
     };
 
-    const [payments, setPayments] = useState([-1]);
+    const [comments, setComments] = useState([-1]);
     const [numbersOfBtns, setNumbersOfBtns] = useState([-1]);
     const [filteredBtns, setfilteredBtns] = useState([-1]);
     const [pageNumber, setPageNumber] = useState(1);
-    const [allPaymentsNumber, setAllPaymentsNumber] = useState(0);
+    const [allCommentsNumber, setAllCommentsNumber] = useState(0);
     const paginate = 2;
 
     useEffect(() => {
-        axios.get(`https://file-server.liara.run/api/payments?pn=${pageNumber}&&pgn=${paginate}`)
+        axios.get(`https://file-server.liara.run/api/comments?pn=${pageNumber}&&pgn=${paginate}`)
             .then(d => {
-                setPayments(d.data.GoalUsers);
-                setNumbersOfBtns(Array.from(Array(Math.ceil(d.data.AllUsersNum / paginate)).keys()));
-                setAllPaymentsNumber(d.data.AllUsersNum);
+                setComments(d.data.GoalCommentss);
+                setNumbersOfBtns(Array.from(Array(Math.ceil(d.data.AllCommentsNum / paginate)).keys()));
+                setAllCommentsNumber(d.data.AllCommentsNum);
             })
             .catch(e => console.log("error"))
     }, [pageNumber]);
@@ -51,18 +51,18 @@ const AllPayments = ({ setMidBanDetCtrl, setRandomNumForBannerClick }) => {
     return (
         <div className="flex flex-col gap-8">
             <div className="flex justify-between items-center">
-                <div>همه سفارش ها</div>
-                <div className="w-32 h-10 rounded bg-indigo-500 text-white flex justify-center items-center">{allPaymentsNumber} سفارش</div>
+                <div className="">دیدگاه های دیده نشده (جدید)</div>
+                <div className="w-32 h-10 rounded bg-indigo-500 text-white flex justify-center items-center">{allCommentsNumber} سفارش</div>
             </div>
             <div className="flex flex-col gap-6">
-                {payments[0] == -1
+                {comments[0] == -1
                     ? (
                         <div className="flex justify-center items-center p-12">
                             <Image alt="loading" width={120} height={120} src={"/loading.svg"} />
                         </div>
-                    ) : payments.length < 1
+                    ) : comments.length < 1
                         ? (<div className="flex justify-center items-center w-full p-8">سفارشی موجود نیست ...</div>)
-                        : (payments.map((da, i) => (
+                        : (comments.map((da, i) => (
                             <Box key={i} data={da} setMidBanDetCtrl={setMidBanDetCtrl} setRandomNumForBannerClick={setRandomNumForBannerClick} />
                         )))
                 }
@@ -87,7 +87,7 @@ const AllPayments = ({ setMidBanDetCtrl, setRandomNumForBannerClick }) => {
                         } onClick={() => {
                             da + 1 == pageNumber
                                 ? console.log("")
-                                : setPayments([-1]);
+                                : setComments([-1]);
                             setPageNumber(da + 1);
                             goTopCtrl();
                         }}
@@ -102,4 +102,4 @@ const AllPayments = ({ setMidBanDetCtrl, setRandomNumForBannerClick }) => {
     );
 }
 
-export default AllPayments;
+export default AllNewComments;

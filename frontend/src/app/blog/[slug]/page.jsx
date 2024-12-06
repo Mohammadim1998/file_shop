@@ -1,13 +1,14 @@
 import Breadcrump from "@/components/Breadcrump";
 import RelatedPosts from "@/components/Sliders/RelatedPosts";
 import Image from "next/image";
-import { FaRegComment, FaRegEye } from "react-icons/fa";
+import { FaRegEye } from "react-icons/fa";
 import { SlCalender } from "react-icons/sl";
 import Link from "next/link";
 import { IoSendOutline } from "react-icons/io5";
 import MostViewedposts from "@/components/MostViewedposts";
 import SearchBlog from "@/components/SearchBlog";
 import CommentManager from "@/components/commentManager";
+import ProductPostCommentNum from "@/components/ProductPost-ShopCommentNum/ProductPostCommentNum";
 
 const getData = async (slug) => {
     const data = await fetch(`https://file-server.liara.run/api/get-post/${slug}`, { cache: "no-store" });
@@ -52,11 +53,7 @@ const SingleBlog = async ({ params }) => {
                                 <span>{data.pageView}</span>
                             </div>
 
-                            <div className="bg-zinc-100 rounded-md p-2 flex justify-between items-center gap-2">
-                                <FaRegComment className="w-6 h-6 text-black" />
-                                <span>تعداد دیدگاه: </span>
-                                <span>{data.comments.length}</span>
-                            </div>
+                          <ProductPostCommentNum goalId={data._id} />
 
                             <div className="bg-zinc-100 rounded-md p-2 flex justify-between items-center gap-2">
                                 <SlCalender className="w-6 h-6 text-black" />

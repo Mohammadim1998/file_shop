@@ -13,9 +13,9 @@ const Payments = ({ cookie }) => {
     const [needRefresh, setNeedRefresh] = useState(0);
 
     //PRICE BEAUTIFUL
-  function priceChanger(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
+    function priceChanger(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
     useEffect(() => {
         if (cookie && cookie.length > 0) {
@@ -40,7 +40,7 @@ const Payments = ({ cookie }) => {
 
     return (
         <div className="relative flex flex-col gap-8 p-20">
-             <h3 className="absolute top-1 ring-1 text-lg">سفارش های من</h3>
+            <h3 className="absolute top-1 ring-1 text-lg">سفارش های من</h3>
 
             <div onClick={() => {
                 setNeedRefresh(1);
@@ -54,39 +54,45 @@ const Payments = ({ cookie }) => {
                         <Image alt="loading" width={120} height={120} src={"/loading.svg"} />
                     </div>)
                     : (
-                        <div>
-                            {data.length < 1}
-                            ? <div className="w-full flex justify-center items-center p-8">سفارشی موجود نیست...</div>
-                            :(<div className="w-full flex flex-col gap-8">
-                                {data.map((da, i) => (
-                                    <div
-                                        className="w-full flex flex-col gap-4 bg-zinc-200 text-sm h-10 rounded-md p-4 relative"
-                                        key={i}
-                                    >
+                        <div className="flex flex-col gap-4">
+                            <div className="flex justify-end items-center w-full">
+                                <div className="rounded-md flex justify-center items-center bg-orange-600 w-20 h-10 text-white">{data.length} سفارش</div>
+                            </div>
 
-                                        <div className="flex justify-between items-start gap-4 w-full">
-                                            <div className="flex justify-center items-center w-20 h-8 rounded bg-zinc-300">
-                                                {priceChanger(da.amount / 10)} تومان
+                            <div>
+                                {data.length < 1}
+                                ? <div className="w-full flex justify-center items-center p-8">سفارشی موجود نیست...</div>
+                                :(<div className="w-full flex flex-col gap-8">
+                                    {data.map((da, i) => (
+                                        <div
+                                            className="w-full flex flex-col gap-4 bg-zinc-200 text-sm h-10 rounded-md p-4 relative"
+                                            key={i}
+                                        >
+
+                                            <div className="flex justify-between items-start gap-4 w-full">
+                                                <div className="flex justify-center items-center w-20 h-8 rounded bg-zinc-300">
+                                                    {priceChanger(da.amount / 10)} تومان
+                                                </div>
+
+                                                <div className="flex justify-center items-center w-40 h-8 rounded bg-zinc-300">
+                                                    تاریخ: {da.createdAt}
+                                                </div>
+                                                {da.payed == true
+                                                    ? (<div className="flex justify-center items-center w-20 h-8 rounded text-white bg-green-600">پرداخت شد</div>)
+                                                    : (<div onClick={() => { window.location.assign(`https://www.zarinpal.com/pg/StartPay/${da.resnumber}`) }} className="cursor-pointer flex justify-center items-center w-60 h-8 rounded text-white bg-rose-600">در انتضار پرداخت (الان پرداخت میکنم)</div>)
+                                                }
                                             </div>
 
-                                            <div className="flex justify-center items-center w-40 h-8 rounded bg-zinc-300">
-                                                تاریخ: {da.createdAt}
+                                            <div className="flex justify-between items-center gap-2 flex-wrap">
+                                                {da.products.map((da, i) => (
+                                                    <SlideBox itemData={da} key={i} />
+                                                ))}
                                             </div>
-                                            {da.payed == true
-                                                ? (<div className="flex justify-center items-center w-20 h-8 rounded text-white bg-green-600">پرداخت شد</div>)
-                                                : (<div onClick={() => { window.location.assign(`https://www.zarinpal.com/pg/StartPay/${da.resnumber}`) }} className="cursor-pointer flex justify-center items-center w-60 h-8 rounded text-white bg-rose-600">در انتضار پرداخت (الان پرداخت میکنم)</div>)
-                                            }
                                         </div>
+                                    ))}
+                                </div>)
 
-                                        <div className="flex justify-between items-center gap-2 flex-wrap">
-                                            {da.products.map((da, i) => (
-                                                <SlideBox itemData={da} key={i} />
-                                            ))}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>)
-
+                            </div>
                         </div>
                     )}
             </div>

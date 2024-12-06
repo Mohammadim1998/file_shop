@@ -95,7 +95,7 @@ const ProductsDetails = ({ goalId }) => {
          })
          .catch((e) => console.log("error in loading posts"));
    }, []);
-   
+
    const [relCategories, setrelCategories] = useState([]);
    const [thisProductCatsIds, setthisProductCatsIds] = useState([]);
    const productsCategoriesMan = (e) => {
@@ -268,6 +268,7 @@ const ProductsDetails = ({ goalId }) => {
                   <h2 className=" text-orange-500">جزئیات محصول</h2>
                   <div className=" flex justify-end items-center gap-4">
                      <Link
+                        target="_blank"
                         href={`/shop/${fullData.slug}`}
                         className=" bg-blue-600 text-white px-4 py-1 rounded-md text-sm transition-all duration-500 hover:bg-blue-700"
                      >
