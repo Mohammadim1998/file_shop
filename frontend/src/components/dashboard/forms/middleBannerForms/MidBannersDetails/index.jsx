@@ -3,8 +3,10 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
 const MidBannersDetails = ({ midBanId }) => {
+    const [auth_cookie, setAuth_cookie] = useState(Cookies.get("auth_cookie"));
     const imageUrlRef = useRef();
     const imageAltRef = useRef();
     const imageLinkRef = useRef();
@@ -28,7 +30,7 @@ const MidBannersDetails = ({ midBanId }) => {
         }
 
         const url = `https://file-server.liara.run/api/update-middle-banner/${midBanId}`;
-        axios.post(url, formData)
+        axios.post(url, formData,{ headers: { auth_cookie: auth_cookie }})
             .then(d => {
                 formData.situation == "true"
                     ? toast.success("بنر با موفقیت بروزرسانی شد.", {
@@ -71,7 +73,7 @@ const MidBannersDetails = ({ midBanId }) => {
     const [fullData, setFullData] = useState("");
 
     useEffect(() => {
-        axios.get(`https://file-server.liara.run/api/get-mid-ban/${midBanId}`)
+        axios.get(`https://file-server.liara.run/api/get-mid-ban/${midBanId}`,{ headers: { auth_cookie: auth_cookie }})
             .then((d) => {
                 setImageUrlS(d.data.image)
                 setImageAltS(d.data.imageAlt)
@@ -83,7 +85,7 @@ const MidBannersDetails = ({ midBanId }) => {
     }, [midBanId]);
 
     const remover = () => {
-        axios.post(`https://file-server.liara.run/api/delete-middle-banner/${midBanId}`)
+        axios.post(`https://file-server.liara.run/api/delete-middle-banner/${midBanId}`,{ headers: { auth_cookie: auth_cookie }})
             .then(d => {
                 toast.success("بنر با موفقیت حذف شد.", {
                     autoClose: 3000,

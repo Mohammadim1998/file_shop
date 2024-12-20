@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
 const PaymentDetails = ({ goalId }) => {
+    const [auth_cookie, setAuth_cookie] = useState(Cookies.get("auth_cookie"));
     const viewedRef = useRef();
     const emailRef = useRef();
     const usernameRef = useRef();
@@ -21,7 +23,7 @@ const PaymentDetails = ({ goalId }) => {
     //Loading default values
     const [fullData, setFullData] = useState("");
     useEffect(() => {
-        axios.get(`https://file-server.liara.run/api/get-payment/${goalId}`)
+        axios.get(`https://file-server.liara.run/api/get-payment/${goalId}`,{ headers: { auth_cookie: auth_cookie }})
             .then((d) => {
                 setFullData(d.data);
             })
@@ -42,7 +44,7 @@ const PaymentDetails = ({ goalId }) => {
         }
 
         const url = `https://file-server.liara.run/api/update-payment/${goalId}`;
-        axios.post(url, formData)
+        axios.post(url, formData,{ headers: { auth_cookie: auth_cookie }})
             .then((d) => {
                 toast.success("سفارش با موفقیت بروزرسانی شد.", {
                     autoClose: 3000,
@@ -70,7 +72,7 @@ const PaymentDetails = ({ goalId }) => {
     };
 
     const remover = () => {
-        axios.post(`https://file-server.liara.run/api/delete-payment/${goalId}`)
+        axios.post(`https://file-server.liara.run/api/delete-payment/${goalId}`,{ headers: { auth_cookie: auth_cookie }})
             .then(d => {
                 toast.success("سفارش با موفقیت حذف شد.", {
                     autoClose: 3000,

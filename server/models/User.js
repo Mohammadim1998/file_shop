@@ -3,7 +3,7 @@ const UserSchema = new mongoose.Schema({
     username: {
         required: true,
         type: String,
-        // unique:true
+        unique:true
     },
     displayname: {
         required: true,
@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
     email: {
         required: true,
         type: String,
-        // unique:true
+        unique:true
     },
     password: {
         required: true,

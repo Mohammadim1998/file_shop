@@ -6,6 +6,7 @@ import Image from "next/image";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const AllProducts = ({ setmidBanDetCtrl, setrandNumForBannerClick }) => {
    const goTopCtrl = () => {
@@ -14,6 +15,7 @@ const AllProducts = ({ setmidBanDetCtrl, setrandNumForBannerClick }) => {
          behavior: "smooth",
       });
    };
+   const [auth_cookie, setAuth_cookie] = useState(Cookies.get("auth_cookie"));
 
    const [products, setproducts] = useState([-1]);
    const [numbersOfBtns, setnumbersOfBtns] = useState([-1]);
@@ -25,7 +27,7 @@ const AllProducts = ({ setmidBanDetCtrl, setrandNumForBannerClick }) => {
 
    useEffect(() => {
       axios
-         .get(`https://file-server.liara.run/api/${categoryUrl}?pn=${pageNumber}&&pgn=${paginate}`)
+         .get(`https://file-server.liara.run/api/${categoryUrl}?pn=${pageNumber}&&pgn=${paginate}`,{ headers: { auth_cookie: auth_cookie }})
          .then((d) => {
             setproducts(d.data.GoalProducts);
             setnumbersOfBtns(

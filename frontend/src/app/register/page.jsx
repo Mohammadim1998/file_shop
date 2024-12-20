@@ -19,7 +19,16 @@ const page = async () => {
     const data = await getAuthData(cookieValue);
 
     return (
-        <RegisterForm />
+        <div>
+            <>
+                <title>ثبت نام در سایت</title>
+                <meta name="description" content={"ثبت نام در سایت"} />
+                <meta name="robots" content="index, follow" />
+                <link rel="canonical" href={"http://localhost:3000/register"} />
+            </>
+
+            <RegisterForm />
+        </div>
     );
 }
 

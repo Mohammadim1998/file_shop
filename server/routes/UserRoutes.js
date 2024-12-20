@@ -5,11 +5,12 @@ const { check } = require('express-validator');
 const UserCtrl = require('../controllers/UserCtrl');
 const User = require('../models/User');
 
+const userExist= require('../middlewares/userExist');
+const isAdmin= require('../middlewares/isAdmin');
 
 
 // EXPRESS RATE LIMIT
 const rateLimit = require('express-rate-limit');
-const userExist = require('../middlewares/userExist');
 const loginRegisterLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 5,
@@ -20,7 +21,7 @@ const loginRegisterLimiter = rateLimit({
 });
 
 
-router.get("/users", UserCtrl.getAllUsers);
+router.get("/users",isAdmin, UserCtrl.getAllUsers);
 
 router.post("/new-user",loginRegisterLimiter,[
     check("username", "تعداد کارکتر نام کاربری باید 8 تا 20 کارکتر باشد...").isLength({ min: 8, max: 20 }),
@@ -36,7 +37,7 @@ router.post("/new-user",loginRegisterLimiter,[
     check("userIsAcive", "فرمت یکی از ورودی های ثبت نام کاربر اشتباه است...").isBoolean(),
 ],UserCtrl.registerUser);
 
-router.post("/user-activation-code-again", UserCtrl.userActivationCodeAgain);
+router.post("/user-activation-code-again",userExist, UserCtrl.userActivationCodeAgain);
 
 router.post("/login-user",loginRegisterLimiter,[
     check("password", "تعداد کارکتر رمز عبور باید 8 تا 20 کارکتر باشد...").isLength({ min: 8, max: 20 }),
@@ -65,36 +66,36 @@ router.post("/update-user/:id", [
             }
         });
     }),
-],UserCtrl.updateUser);
+], isAdmin,UserCtrl.updateUser);
 router.post("/update-mini-user/:id", [
     check("displayname", "تعداد کارکتر نام نمایشی باید 8 تا 20 کارکتر باشد...").isLength({ min: 8, max: 20 }),
     check("password", "تعداد کارکتر رمز عبور باید 8 تا 20 کارکتر باشد...").isLength({ min: 8, max: 20 }),
-], UserCtrl.updateMiniUser);
-router.post("/delete-user/:id", UserCtrl.deleteUser);
+],userExist, UserCtrl.updateMiniUser);
+router.post("/delete-user/:id",isAdmin, UserCtrl.deleteUser);
 
 // for admin
-router.get("/get-user/:id", UserCtrl.getOneUserById);
+router.get("/get-user/:id",isAdmin, UserCtrl.getOneUserById);
 // for user
 router.get("/get-user-data",userExist, UserCtrl.getUserDataAccount);
-router.get("/get-user-admin-data", UserCtrl.getUserAdminData);
+router.get("/get-user-admin-data",isAdmin, UserCtrl.getUserAdminData);
 
 router.post("/search-user", [
     check("email", "فرمت ایمیل اشتباه است...").isEmail(),
-],UserCtrl.searchUsers);
+], isAdmin,UserCtrl.searchUsers);
 
-router.get("/get-part-of-user-data/:slug", UserCtrl.getPartOfUserData);
+router.get("/get-part-of-user-data/:slug",userExist, UserCtrl.getPartOfUserData);
 // EMAIL SEND CHANGER
-router.post("/update-email-user", UserCtrl.EmailSendChanger);
+router.post("/update-email-user",userExist, UserCtrl.EmailSendChanger);
 
-router.post("/confirm-user-email", UserCtrl.confirmEmail);
+router.post("/confirm-user-email",userExist, UserCtrl.confirmEmail);
 
-router.post("/favorite-product", UserCtrl.favoriteProductMan);
-router.post("/cart-managment", UserCtrl.cartMan);
+router.post("/favorite-product",userExist, UserCtrl.favoriteProductMan);
+router.post("/cart-managment",userExist, UserCtrl.cartMan);
 router.get("/cart-number", UserCtrl.cartNumber);
-router.get("/uncheck-payment/:id", UserCtrl.uncheckPayment);
-router.get("/uncheck-comment/:id", UserCtrl.uncheckComment);
+router.get("/uncheck-payment/:id",isAdmin, UserCtrl.uncheckPayment);
+router.get("/uncheck-comment/:id",isAdmin, UserCtrl.uncheckComment);
 
 // FOR DASHBOARD DEFAULT PANEL
-router.get("/get-new-items", UserCtrl.getNewItems);
+router.get("/get-new-items",isAdmin, UserCtrl.getNewItems);
 
 module.exports = router;

@@ -6,12 +6,15 @@ import Link from "next/link";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const ProductsDetails = ({ goalId }) => {
    //FOR SPLIT CATEGORIES
    const splitForCategories = (value) => {
       return value.split("*");
    }
+
+   const [auth_cookie, setAuth_cookie] = useState(Cookies.get("auth_cookie"));
 
    // FORM SHOULD BE NOT SEND WITH ENTER KEY
    const titleRef = useRef();
@@ -66,7 +69,7 @@ const ProductsDetails = ({ goalId }) => {
       const productUrl =
          "https://file-server.liara.run/api/products-rel";
       axios
-         .get(productUrl)
+         .get(productUrl,{ headers: { auth_cookie: auth_cookie }})
          .then((d) => {
             setProducts(d.data);
          })
@@ -89,7 +92,7 @@ const ProductsDetails = ({ goalId }) => {
       const postsUrl =
          "https://file-server.liara.run/api/products-categories-rel";
       axios
-         .get(postsUrl)
+         .get(postsUrl,{ headers: { auth_cookie: auth_cookie }})
          .then((d) => {
             setCategories(d.data);
          })
@@ -158,7 +161,7 @@ const ProductsDetails = ({ goalId }) => {
       };
       const url = `https://file-server.liara.run/api/update-product/${goalId}`;
       axios
-         .post(url, formData)
+         .post(url, formData,{ headers: { auth_cookie: auth_cookie }})
          .then((d) => {
             formData.published == "true"
                ? toast.success("محصول با موفقیت به روز رسانی شد.", {
@@ -197,7 +200,7 @@ const ProductsDetails = ({ goalId }) => {
    const remover = () => {
       const url = `https://file-server.liara.run/api/delete-product/${goalId}`;
       axios
-         .post(url)
+         .post(url,{ headers: { auth_cookie: auth_cookie }})
          .then((d) => {
             toast.success("محصول با موفقیت حذف شد.", {
                autoClose: 3000,
@@ -229,7 +232,7 @@ const ProductsDetails = ({ goalId }) => {
    useEffect(() => {
       axios
          .get(
-            `https://file-server.liara.run/api/get-product-by-id/${goalId}`
+            `https://file-server.liara.run/api/get-product-by-id/${goalId}`,{ headers: { auth_cookie: auth_cookie }}
          )
          .then((d) => {
             setfullData(d.data);

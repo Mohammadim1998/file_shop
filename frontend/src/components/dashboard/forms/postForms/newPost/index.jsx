@@ -4,8 +4,10 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
 const NewPost = () => {
+    const [auth_cookie, setAuth_cookie] = useState(Cookies.get("auth_cookie"));
     const titleRef = useRef();
     const slugRef = useRef();
     const imageRef = useRef();
@@ -41,7 +43,7 @@ const NewPost = () => {
     const [posts, setPosts] = useState([-1]);
     useEffect(() => {
         const url = "https://file-server.liara.run/api/posts-rel";
-        axios.get(url)
+        axios.get(url,{ headers: { auth_cookie: auth_cookie }})
             .then(d => setPosts(d.data))
             .catch(e => console.log("error in loading"))
     }, []);
@@ -77,7 +79,7 @@ const NewPost = () => {
         }
 
         const url = "https://file-server.liara.run/api/new-post";
-        axios.post(url, formData)
+        axios.post(url, formData,{ headers: { auth_cookie: auth_cookie }})
             .then((d) => {
                 formData.published == "true"
                     ? toast.success("مقاله با موفقیت دخیره شد.", {

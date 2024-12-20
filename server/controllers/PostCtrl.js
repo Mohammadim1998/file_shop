@@ -1,8 +1,6 @@
 const Post = require('../models/Post');
 const { validationResult } = require('express-validator');
 
-
-
 const getAllPosts = async (req, res) => {
     try {
         if (req.query.pn && req.query.pgn) {
@@ -127,7 +125,6 @@ const getOnePost = async (req, res) => {
     try {
         const goalPost = await Post.findOne({ slug: req.params.slug });
         if (goalPost.published == true) {
-
             // ADD 1 TO POST PAGE VIEW
             const newPost = {
                 pageView: goalPost.pageView + 1
@@ -137,8 +134,9 @@ const getOnePost = async (req, res) => {
             });
             res.status(200).json(goalPost);
         } else {
-            res.status(400).json({ msg: "مقاله هنوز منتشر نشده است..." });
+            res.status(400).json({ msg: "مقاله هنوز منتشر نشده است..." })
         }
+
     }
     catch (err) {
         console.log(err);
@@ -188,7 +186,7 @@ const getMostViewed = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.status(400).json(err);
+        res.status(400).json({ msg: "error" });
     }
 }
 module.exports.getMostViewed = getMostViewed;
@@ -210,17 +208,12 @@ const getRelatedPosts = async (req, res) => {
 module.exports.getRelatedPosts = getRelatedPosts;
 
 
-
-
-
 const SearchPosts = async (req, res) => {
 
-
     try {
-
         let allPosts = await Post.find({ published: 1 }).sort({ _id: -1 }).select({ title: 1, slug: 1, image: 1, imageAlt: 1, updatedAt: 1, shortDesc: 1, tags: 1, pageView: 1 });
 
-        // KEYWORD SEARCH
+        //KWYWORD SEARCH
         if (req.query.keyword) {
             const theKeyword = req.query.keyword;
             const a = allPosts.filter(pro => pro.title.replace(/\s+/g, "_").toLowerCase().includes(theKeyword) || pro.imageAlt.replace(/\s+/g, "_").toLowerCase().includes(theKeyword) || pro.shortDesc.replace(/\s+/g, "_").toLowerCase().includes(theKeyword));
@@ -233,16 +226,13 @@ const SearchPosts = async (req, res) => {
                 }
             }
 
-            const postsSummer = [...a, ...b]
+            const postsSummer = [...a, ...b];
             let uniq = item => [...new Set(item)];
             allPosts = uniq(postsSummer);
         }
 
-
-
-        // PAGINATION 
-
-        // THIS IS FOR PAGEINATION BTNS
+        // PAGINATION
+        //THIS IS FOR PAGINATION BTNS
         const postsNumber = allPosts.length;
 
         const paginate = req.query.pgn ? req.query.pgn : 12;
@@ -259,17 +249,13 @@ const SearchPosts = async (req, res) => {
         }
         allPosts = a;
 
-
         const allBtns = Array.from(Array(Math.ceil(postsNumber / paginate)).keys());
-        // FILTERING BTNS FOR SENDING JUST 5 NUMBERS
         const btns = [];
         for (let i = 0; i < allBtns.length; i++) {
-            if (i == 0 || i == (allBtns.length - 1) || (i > Number(pageNumber) - 3 && i < Number(pageNumber) + 1)
-            ) {
-                btns.push(i)
+            if (i == 0 || i == (allBtns.length - 1) || (i > Number(pageNumber) - 3 && i < Number(pageNumber) + 1)) {
+                btns.push(i);
             }
         }
-
 
         const outData = [];
         for (let i = 0; i < allPosts.length; i++) {
@@ -284,12 +270,10 @@ const SearchPosts = async (req, res) => {
                 shortDesc: data.shortDesc,
                 pageView: data.pageView,
             };
-            outData.push(obj)
+            outData.push(obj);
         }
 
-
         res.status(200).json({ allPosts: outData, btns, postsNumber });
-
     }
     catch (err) {
         console.log(err);
@@ -297,5 +281,3 @@ const SearchPosts = async (req, res) => {
     }
 }
 module.exports.SearchPosts = SearchPosts;
-
-

@@ -15,7 +15,7 @@ const ProductSchema = new mongoose.Schema({
     slug: {
         required: true,
         type: String,
-        // unique:true
+        unique: true
     },
     mainFile: {
         required: true,
@@ -44,50 +44,50 @@ const ProductSchema = new mongoose.Schema({
     tags: {
         required: true,
         type: Array,
-        default:[],
+        default: [],
     },
     relatedProducts: {
         required: true,
         type: Array,
-        default:[],
+        default: [],
     },
     comments: {
         required: true,
         type: Array,
-        default:[],
+        default: [],
     },
     typeOfProduct: {
         required: true,
         type: String,
-        enum:[
-            "gr","app","book"
+        enum: [
+            "gr", "app", "book"
         ]
     },
     features: {
         required: true,
         type: Array,
-        default:[]
+        default: []
     },
     categories: {
         required: true,
         type: Array,
-        default:[]
+        default: []
     },
     buyNumber: {
         required: true,
         type: Number,
-        default:0
+        default: 0
     },
     pageView: {
         required: true,
         type: Number,
-        default:0
+        default: 0
     },
     published: {
         required: true,
         type: Boolean,
-        default:false
+        default: false
     },
-   
+
 });
 module.exports = mongoose.model("Product", ProductSchema);

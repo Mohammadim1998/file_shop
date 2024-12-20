@@ -21,7 +21,7 @@ const newPayment = async (req, res) => {
                     merchant_id: process.env.MERCHANT_CODE,
                     amount: req.body.amount,
                     description: "پرداخت فروشگاه فایل مرن فا",
-                    callback_url: "https://megafront.ir/payment-result",
+                    callback_url:` ${process.env.WEBSITE_URL}/payment-result`,
                     metadata: {
                         email: theUser.email,
                         username: theUser.username,

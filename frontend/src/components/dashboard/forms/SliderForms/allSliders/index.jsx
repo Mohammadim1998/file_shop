@@ -6,6 +6,7 @@ import Image from "next/image";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const Allsliders = ({ setmidBanDetCtrl, setrandNumForBannerClick }) => {
    const goTopCtrl = () => {
@@ -14,8 +15,9 @@ const Allsliders = ({ setmidBanDetCtrl, setrandNumForBannerClick }) => {
          behavior: "smooth",
       });
    };
-   const [sliders, setsliders] = useState([-1]);
 
+   const [auth_cookie, setAuth_cookie] = useState(Cookies.get("auth_cookie"));
+   const [sliders, setsliders] = useState([-1]);
    const [numbersOfBtns, setnumbersOfBtns] = useState([-1]);
    const [filteredBtns, setfilteredBtns] = useState([-1]);
    const [pageNumber, setpageNumber] = useState(1);
@@ -24,9 +26,7 @@ const Allsliders = ({ setmidBanDetCtrl, setrandNumForBannerClick }) => {
 
    useEffect(() => {
       axios
-         .get(
-            `https://file-server.liara.run/api/sliders?pn=${pageNumber}&&pgn=${paginate}`
-         )
+         .get(`https://file-server.liara.run/api/sliders?pn=${pageNumber}&&pgn=${paginate}`,{ headers: { auth_cookie: auth_cookie }})
          .then((d) => {
             setsliders(d.data.GoalSliders);
             setnumbersOfBtns(

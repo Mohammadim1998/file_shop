@@ -4,13 +4,16 @@ import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const NewSlider = () => {
+   const [auth_cookie, setAuth_cookie] = useState(Cookies.get("auth_cookie"));
    const imageUrlRef = useRef();
    const imageAltRef = useRef();
    const sorterRef = useRef();
    const imageLinkRef = useRef();
    const imageSituationRef = useRef();
+
    const submiter = (e) => {
       e.preventDefault();
       const formData = {
@@ -26,7 +29,7 @@ const NewSlider = () => {
       };
       const url = `https://file-server.liara.run/api/new-slider`;
       axios
-         .post(url, formData)
+         .post(url, formData,{ headers: { auth_cookie: auth_cookie }})
          .then((d) => {
             formData.situation == "true"
                ? toast.success("اسلایدر با موفقیت منتشر شد.", {

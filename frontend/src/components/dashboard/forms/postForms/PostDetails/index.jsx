@@ -5,8 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
 const PostDetails = ({ goalId }) => {
+    const [auth_cookie, setAuth_cookie] = useState(Cookies.get("auth_cookie"));
     const titleRef = useRef();
     const slugRef = useRef();
     const imageRef = useRef();
@@ -43,7 +45,7 @@ const PostDetails = ({ goalId }) => {
     useEffect(() => {
         const postsUrl = "https://file-server.liara.run/api/posts-rel";
         axios
-            .get(postsUrl)
+            .get(postsUrl,{ headers: { auth_cookie: auth_cookie }})
             .then((d) => {
                 setPosts(d.data);
             })
@@ -64,7 +66,7 @@ const PostDetails = ({ goalId }) => {
     //Loading default values
     const [fullData, setFullData] = useState("");
     useEffect(() => {
-        axios.get(`https://file-server.liara.run/api/get-post-by-id/${goalId}`)
+        axios.get(`https://file-server.liara.run/api/get-post-by-id/${goalId}`,{ headers: { auth_cookie: auth_cookie }})
             .then((d) => {
                 setFullData(d.data);
                 setTag(d.data.tags);
@@ -90,7 +92,7 @@ const PostDetails = ({ goalId }) => {
         }
 
         const url = `https://file-server.liara.run/api/update-post/${goalId}`;
-        axios.post(url, formData)
+        axios.post(url, formData,{ headers: { auth_cookie: auth_cookie }})
             .then((d) => {
                 formData.published == "true"
                     ? toast.success("مقاله با موفقیت بروزرسانی شد.", {
@@ -127,7 +129,7 @@ const PostDetails = ({ goalId }) => {
     };
 
     const remover = () => {
-        axios.post(`https://file-server.liara.run/api/delete-post/${goalId}`)
+        axios.post(`https://file-server.liara.run/api/delete-post/${goalId}`,{ headers: { auth_cookie: auth_cookie }})
             .then(d => {
                 toast.success("مقاله با موفقیت حذف شد.", {
                     autoClose: 3000,

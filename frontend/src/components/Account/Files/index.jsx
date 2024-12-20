@@ -35,6 +35,15 @@ const Files = ({ cookie }) => {
 
     return (
         <div className="relative flex flex-col gap-8 p-20">
+            <>
+                <meta charset="utf-8" />
+                <title>فایل های من</title>
+                <meta name="description" content="فایل های من" />
+                <meta name="robots" content="index, follow" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <link rel="shortcut icon" href="/favicon2.ico" type="image/x-icon" />
+                <link rel="canonical" href="https://localhost:3000/account/files" />
+            </>
             <h3 className="absolute top-1 ring-1 text-lg">فایل های من</h3>
 
             <div onClick={() => {
@@ -55,44 +64,45 @@ const Files = ({ cookie }) => {
                             </div>
 
                             <div>
-                                {data.length < 1}
-                                ? <div className="w-full flex justify-center items-center p-8">فایلی موجود نیست...</div>
-                                :(<div className="w-full flex flex-col gap-8">
-                                    {data.map((da, i) => (
-                                        <div key={i} className="w-full flex flex-col gap-4 bg-zinc-200 text-sm h-10 rounded-md p-4 relative">
-                                            <div className="flex justify-between items-start gap-4">
-                                                <div className="flex justify-center items-center pt-2">
-                                                    <Image
-                                                        width={270}
-                                                        height={150}
-                                                        className="rounded-md"
-                                                        src={da.image}
-                                                        alt={da.imageAlt}
-                                                    />
+                                {data.length < 1
+                                    ? <div className="w-full flex justify-center items-center p-8">فایلی موجود نیست...</div>
+                                    : (<div className="w-full flex flex-col gap-8">
+                                        {data.map((da, i) => (
+                                            <div key={i} className="w-full flex flex-col gap-4 bg-zinc-200 text-sm h-10 rounded-md p-4 relative">
+                                                <div className="flex justify-between items-start gap-4">
+                                                    <div className="flex justify-center items-center pt-2">
+                                                        <Image
+                                                            width={270}
+                                                            height={150}
+                                                            className="rounded-md"
+                                                            src={da.image}
+                                                            alt={da.imageAlt}
+                                                        />
+                                                    </div>
+
+                                                    <div className="relative w-full h-[140px] flex flex-col justify-between gap-4">
+                                                        <Link
+                                                            href={`/shop/${da.slug}`}
+                                                            target={"_blank"}
+                                                            className="absolute top-1 left-1 rounded-sm flex justify-center items-center text-xs w-20 h-6 bg-green-600 text-white transition-all duration-300 hover:bg-green-600 pt-2"
+                                                        >
+                                                            لینک محصول
+                                                        </Link>
+                                                        <h4 className="text-base">{da.title}</h4>
+                                                        <Link
+                                                            href={da.mainFile}
+                                                            target={"_blank"}
+                                                            className="rounded-md flex justify-center items-center text-sm bg-sky-600 text-white transition-all duration-300 hover:bg-sky-700 py-3 px-4"
+                                                        >
+                                                            دانلود فایل محصول
+                                                        </Link>
+                                                    </div>
                                                 </div>
 
-                                                <div className="relative w-full h-[140px] flex flex-col justify-between gap-4">
-                                                    <Link
-                                                        href={`/shop/${da.slug}`}
-                                                        target={"_blank"}
-                                                        className="absolute top-1 left-1 rounded-sm flex justify-center items-center text-xs w-20 h-6 bg-green-600 text-white transition-all duration-300 hover:bg-green-600 pt-2"
-                                                    >
-                                                        لینک محصول
-                                                    </Link>
-                                                    <h4 className="text-base">{da.title}</h4>
-                                                    <Link
-                                                        href={da.mainFile}
-                                                        target={"_blank"}
-                                                        className="rounded-md flex justify-center items-center text-sm bg-sky-600 text-white transition-all duration-300 hover:bg-sky-700 py-3 px-4"
-                                                    >
-                                                        دانلود فایل محصول
-                                                    </Link>
-                                                </div>
                                             </div>
-
-                                        </div>
-                                    ))}
-                                </div>)
+                                        ))}
+                                    </div>)
+                                }
                             </div>
                         </div>
                     )}

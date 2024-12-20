@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
 const CommentDetails = ({ goalId }) => {
+    const [auth_cookie, setAuth_cookie] = useState(Cookies.get("auth_cookie"));
     const [needToRefresh, setNeedToRefresh] = useState(1);
     const viewedRef = useRef();
     const publishedRef = useRef();
@@ -22,7 +24,7 @@ const CommentDetails = ({ goalId }) => {
     //Loading default values
     const [fullData, setFullData] = useState("");
     useEffect(() => {
-        axios.get(`https://file-server.liara.run/api/get-comment/${goalId}`)
+        axios.get(`https://file-server.liara.run/api/get-comment/${goalId}`,{ headers: { auth_cookie: auth_cookie }})
             .then((d) => {
                 setFullData(d.data);
             })
@@ -40,7 +42,7 @@ const CommentDetails = ({ goalId }) => {
         }
 
         const url = `https://file-server.liara.run/api/update-comment/${goalId}`;
-        axios.post(url, formData)
+        axios.post(url, formData,{ headers: { auth_cookie: auth_cookie }})
             .then((d) => {
                 toast.success("یدگاه با موفقیت بروزرسانی شد.", {
                     autoClose: 3000,
@@ -68,7 +70,7 @@ const CommentDetails = ({ goalId }) => {
     };
 
     const remover = () => {
-        axios.post(`https://file-server.liara.run/api/delete-comment/${goalId}`)
+        axios.post(`https://file-server.liara.run/api/delete-comment/${goalId}`,{ headers: { auth_cookie: auth_cookie }})
             .then(d => {
                 toast.success("دیدگاه با موفقیت حذف شد.", {
                     autoClose: 3000,
@@ -102,7 +104,7 @@ const CommentDetails = ({ goalId }) => {
             email: fullData.email,
         };
 
-        axios.post(`https://file-server.liara.run/api/publish-comment`, sendingData)
+        axios.post(`https://file-server.liara.run/api/publish-comment`, sendingData,{ headers: { auth_cookie: auth_cookie }})
             .then(d => {
                 toast.success("انتشار دیدگاه و ارسال ایمیل با موفقیت انجام شد", {
                     autoClose: 3000,

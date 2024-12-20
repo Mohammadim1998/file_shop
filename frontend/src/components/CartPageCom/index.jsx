@@ -193,13 +193,11 @@ const CartPageCom = ({ cookie }) => {
                         <div>
                             <div className="flex justify-between items-start gap-2">
                                 <div className="w-full rounded-md bg-zinc-100 p-4">
-                                    {data.length < 1}
-                                    ? <div className="w-full flex justify-center items-center p-8">محصولی موجود نیست...</div>
-                                    :<div className="w-full flex flex-col gap-8">
-                                        {
-                                            data.map((da, i) => (
-                                                <div key={i} className="w-full flex flex-col gap-4 bg-zinc-200 text-sm h-10 rounded-md p-4 relative">
-
+                                    {data.length < 1
+                                        ? (<div className="w-full flex justify-center items-center p-8">محصولی موجود نیست...</div>)
+                                        : (<div className="w-full flex flex-col gap-8">
+                                            {data.map((da, i) => (
+                                                <div key={i} className="w-full flex flex-col gap-4 bg-zinc-200 text-sm rounded-md p-4 relative">
                                                     <div className="flex justify-between items-start gap-4">
                                                         <div className="flex justify-center items-center pt-2">
                                                             <Image
@@ -211,7 +209,7 @@ const CartPageCom = ({ cookie }) => {
                                                             />
                                                         </div>
 
-                                                        <div className="relative w-full flex flex-col gap-4">
+                                                        <div className="w-full flex flex-col gap-4">
                                                             <div className="absolute top-1 left-24 bg-indigo-500 text-white rounded-sm text-xs flex justify-center items-center w-20 h-6">
                                                                 {da.typeOfProduct == "gr" ? (
                                                                     <div>فایل گرافیکی</div>
@@ -221,7 +219,7 @@ const CartPageCom = ({ cookie }) => {
                                                                     <div>کتاب</div>
                                                                 )}
                                                             </div>
-                                                            <div onClick={() => favAdder(da._id)} className="cursor-pointer absolute top-1 left-48 bg-blue-500 text-white transition-all duration-300 hover:bg-blue-600 rounded-sm text-xs flex justify-center items-center w-24 h-6">
+                                                            <div onClick={() => favAdder(da._id)} className="cursor-pointer absolute top-1 left-[186px] bg-blue-500 text-white transition-all duration-300 hover:bg-blue-600 rounded-sm text-xs flex justify-center items-center w-24 h-6">
                                                                 افزودن به علاقه ها
                                                             </div>
                                                             <Link
@@ -263,9 +261,9 @@ const CartPageCom = ({ cookie }) => {
 
                                                     <div onClick={() => productRemover(da._id)} className="absolute bottom-2 left-2 w-16 h-6 flex justify-center items-center gap-2 rounded bg-rose-600 text-white hover:bg-rose-700 transition-all duration-300">حذف <RiDeleteBin6Line /></div>
                                                 </div>
-                                            ))
-                                        }
-                                    </div>
+                                            ))}
+                                        </div>)
+                                    }
                                 </div>
 
                                 <div className="w-80 min-w-80 rounded-md bg-zinc-100 p-4">

@@ -4,8 +4,10 @@ import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const NewCategory = () => {
+   const [auth_cookie, setAuth_cookie] = useState(Cookies.get("auth_cookie"));
    const titleRef = useRef();
    const slugRef = useRef();
    const imageUrlRef = useRef();
@@ -31,7 +33,7 @@ const NewCategory = () => {
       };
       const url = `https://file-server.liara.run/api/new-category`;
       axios
-         .post(url, formData)
+         .post(url, formData, { headers: { auth_cookie: auth_cookie } })
          .then((d) => {
             formData.situation == "true"
                ? toast.success(" دسته محصول با موفقیت منتشر شد.", {

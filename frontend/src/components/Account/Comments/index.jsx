@@ -20,10 +20,10 @@ const Favorites = ({ cookie }) => {
 
     useEffect(() => {
         if (cookie && cookie.length > 0) {
-            axios.get("https://file-server.liara.run/api/get-part-of-user-data/favorite", { headers: { auth_cookie: cookie } })
+            axios.get("https://file-server.liara.run/api/get-part-of-user-data/comments", { headers: { auth_cookie: cookie } })
                 .then(d => {
                     setData(d.data);
-                    console.log("d.Favorites ===>>>", d.data);
+                    console.log("d.comment ===>>>", d.data);
                     setNeedRefresh(1);
                 })
                 .catch(e => {
@@ -109,6 +109,15 @@ const Favorites = ({ cookie }) => {
 
     return (
         <div className="relative flex flex-col gap-8 p-20">
+            <>
+                <meta charset="utf-8" />
+                <title>دیدگاه های من</title>
+                <meta name="description" content="دیدگاه های من" />
+                <meta name="robots" content="index, follow" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <link rel="shortcut icon" href="/favicon2.ico" type="image/x-icon" />
+                <link rel="canonical" href="https://localhost:3000/account/comments" />
+            </>
             <h3 className="absolute top-1 ring-1 text-lg">دیدگاه های من</h3>
 
             <div onClick={() => {
@@ -129,10 +138,9 @@ const Favorites = ({ cookie }) => {
                             </div>
 
                             <div>
-                                <div>
-                                    {data.length < 1}
+                                {data.length < 1
                                     ? <div className="w-full flex justify-center items-center p-8">دیدگاهی موجود نیست...</div>
-                                    :(<div className="w-full flex flex-col gap-8">
+                                    : (<div className="w-full flex flex-col gap-8">
                                         {data.map((da, i) => (
                                             <div key={i} className="w-full flex flex-col gap-4 bg-zinc-200 text-sm h-10 rounded-md p-4 relative">
                                                 <div className="flex justify-between items-start gap-4">
@@ -166,12 +174,10 @@ const Favorites = ({ cookie }) => {
                                                         <p className="text-base leading-9 text-black">{da.message}</p>
                                                     </div>
                                                 </div>
-
                                             </div>
-                                        ))
-                                        }
+                                        ))}
                                     </div>)
-                                </div>
+                                }
                             </div>
                         </div>
                     )}

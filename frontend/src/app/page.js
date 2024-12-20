@@ -12,18 +12,27 @@ const getData = async () => {
 }
 
 const Home = async () => {
-  const data = await getData();  
+  const data = await getData();
 
   return (
-    <main className="w-full flex flex-col gap-12 pb-60">
-      <MainSlider />
-      <ProductsSlider goalData={data} title="اپلیکیشن ها" linkComp="app" />
-      <MiddleBanners />
-      <ProductsSlider goalData={data} title="کتاب ها" linkComp="book" />
-      <Categories />
-      <GraphicSlider goalData={data} />
-      <NewBlogs />
-    </main>
+    <div>
+      <>
+        <title>فروشگاه فایل مرنفا</title>
+        <meta name="description" content={"فروشگاه فایل مرنفا"} />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href={"http://localhost:3000/"} />
+      </>
+
+      <main className="w-full flex flex-col gap-12 pb-60">
+        <MainSlider />
+        <ProductsSlider goalData={data} title="اپلیکیشن ها" linkComp="app" />
+        <MiddleBanners />
+        <ProductsSlider goalData={data} title="کتاب ها" linkComp="book" />
+        <Categories />
+        <GraphicSlider goalData={data} />
+        <NewBlogs />
+      </main>
+    </div>
   );
 }
 

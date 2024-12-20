@@ -56,6 +56,8 @@ module.exports.newMidBan = newMidBan;
 
 const updateMidBan = async (req, res) => {
     try {
+
+
         // EXPRESS VALIDATOR 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -75,6 +77,11 @@ const updateMidBan = async (req, res) => {
                 res.status(422).json({ msg: "فرمت عکس اشتباه هست." });
             }
         }
+
+
+
+
+
     }
     catch (err) {
         console.log(err);

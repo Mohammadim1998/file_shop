@@ -48,13 +48,13 @@ const AccountMain = ({ items }) => {
         if (items.slug[0] == "info") {
             setDetails(<Info cookie={auth_cookie} />)
         } else if (items.slug[0] == "favorites") {
-            setDetails(<Favorites />)
+            setDetails(<Favorites cookie={auth_cookie} />)
         } else if (items.slug[0] == "files") {
-            setDetails(<Files />)
+            setDetails(<Files cookie={auth_cookie} />)
         } else if (items.slug[0] == "comments") {
-            setDetails(<Comments />)
+            setDetails(<Comments cookie={auth_cookie} />)
         } else if (items.slug[0] == "payments") {
-            setDetails(<Payments />)
+            setDetails(<Payments cookie={auth_cookie} />)
         }
     }, [items.slug[0]]);
 

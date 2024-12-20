@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const CategoryDetails = ({ midBanId }) => {
    // FORM SHOULD BE NOT SEND WITH ENTER KEY
@@ -13,6 +14,7 @@ const CategoryDetails = ({ midBanId }) => {
          event.preventDefault();
       }
    };
+   const [auth_cookie, setAuth_cookie] = useState(Cookies.get("auth_cookie"));
 
    const titleRef = useRef();
    const slugRef = useRef();
@@ -42,7 +44,7 @@ const CategoryDetails = ({ midBanId }) => {
       };
       const url = `https://file-server.liara.run/api/update-category/${midBanId}`;
       axios
-         .post(url, formData)
+         .post(url, formData,{ headers: { auth_cookie: auth_cookie }})
          .then((d) => {
             formData.situation == "true"
                ? toast.success("دسته محصول با موفقیت منتشر شد", {
@@ -82,8 +84,7 @@ const CategoryDetails = ({ midBanId }) => {
    useEffect(() => {
       axios
          .get(
-            `https://file-server.liara.run/api/get-category/${midBanId}`
-         )
+            `https://file-server.liara.run/api/get-category/${midBanId}`,{ headers: { auth_cookie: auth_cookie }} )
          .then((d) => {
             setfullData(d.data);
          })
@@ -102,7 +103,7 @@ const CategoryDetails = ({ midBanId }) => {
    const remover = () => {
       const url = `https://file-server.liara.run/api/delete-category/${midBanId}`;
       axios
-         .post(url)
+         .post(url,{ headers: { auth_cookie: auth_cookie }})
          .then((d) => {
             toast.success("دسته محصول با موفقیت حذف شد.", {
                autoClose: 3000,

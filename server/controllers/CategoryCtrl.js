@@ -1,5 +1,5 @@
 const Category = require('../models/Category');
-const Product = require('../models/Product');
+const Product = require("../models/Product");
 const { validationResult } = require('express-validator');
 
 const getAllCategories = async (req, res) => {
@@ -26,7 +26,6 @@ module.exports.getAllCategories = getAllCategories;
 
 const newCategory = async (req, res) => {
     try {
-
         // EXPRESS VALIDATOR 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -38,9 +37,9 @@ const newCategory = async (req, res) => {
                 req.body.image.endsWith(".svg") ||
                 req.body.image.endsWith(".webp")) {
                     const data = req.body;
-                data.slug = req.body.slug.replace(/\s+/g, '-').toLowerCase();
+                    data.slug = req.body.slug.replace(/\s+/g, '-').toLowerCase();
                 await Category.create(data);
-                res.status(200).json({ msg: "دسته بندی با موفقیت ذخیره شد" });
+                res.status(200).json({ msg: "بنر میانی با موفقیت ذخیره شد" });
             }
             else {
                 res.status(422).json({ msg: "فرمت عکس اشتباه هست." });
@@ -53,7 +52,6 @@ const newCategory = async (req, res) => {
     }
 }
 module.exports.newCategory = newCategory;
-
 
 
 
@@ -70,7 +68,6 @@ const updateCategory = async (req, res) => {
                 req.body.image.endsWith(".svg") ||
                 req.body.image.endsWith(".webp")) {
 
-                // UPDATE THIS CATEGORY IN ALL PRODUCTS
                 const theCategory = await Category.findById(req.params.id).select({ title: 1, slug: 1 });
                 const allProducts = await Product.find().select({ categories: 1 });
                 const data = req.body;
@@ -83,7 +80,7 @@ const updateCategory = async (req, res) => {
                             if (j > -1) {
                                 updatedProducCategories.splice(j, 1);
                             }
-                            updatedProducCategories = [...updatedProducCategories, { _id: req.params.id, title: req.body.title, slug: data.slug }]
+                            updatedProducCategories = [...updatedProducCategories, { _id: req.params.id, title: req.body.title, slug:data.slug }]
                             const updatedProduct = { categories: updatedProducCategories }
                             await Product.findByIdAndUpdate(allProducts[i]._id, updatedProduct, {
                                 new: true
@@ -92,11 +89,10 @@ const updateCategory = async (req, res) => {
                     }
                 }
 
-                // UPDATE CATEGORY
                 await Category.findByIdAndUpdate(req.params.id, data, {
                     new: true
                 });
-                res.status(200).json({ msg: "دسته بندی با موفقیت به روز رسانی شد" });
+                res.status(200).json({ msg: "بنر میانی با موفقیت به روز رسانی شد" });
             }
             else {
                 res.status(422).json({ msg: "فرمت عکس اشتباه هست." });
@@ -112,12 +108,8 @@ module.exports.updateCategory = updateCategory;
 
 
 
-
-
 const deleteCategory = async (req, res) => {
     try {
-
-        // REMOVE THIS CATEGORY FROM ALL PRODUCTS
         const theCategory = await Category.findById(req.params.id).select({ title: 1, slug: 1 });
         const allProducts = await Product.find().select({ categories: 1 });
 
@@ -135,10 +127,8 @@ const deleteCategory = async (req, res) => {
                 }
             }
         }
-
-        // REMOVE CATEGORY
         await Category.findByIdAndRemove(req.params.id);
-        res.status(200).json({ msg: "دسته بندی با موفقیت حذف شد." });
+        res.status(200).json({ msg: " دسته بندی با موفقیت حذف شد." });
     }
     catch (err) {
         console.log(err);
@@ -177,4 +167,22 @@ const getMainPageCategories = async (req, res) => {
     }
 }
 module.exports.getMainPageCategories = getMainPageCategories;
+
+
+const getOneCategoryBySlug = async (req, res) => {
+    try {
+        const goalCategory = await Category.findOne({ slug: req.params.slug });
+        if (goalCategory.situation == true) {
+            res.status(200).json(goalCategory);
+        } else {
+            res.status(400).json({ msg: "...دسته هنوز منتشر نشده است" })
+        }
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).json(err);
+    }
+}
+module.exports.getOneCategoryBySlug = getOneCategoryBySlug;
+
 

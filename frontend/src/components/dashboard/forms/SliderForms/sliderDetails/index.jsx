@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const SliderDetails = ({ midBanId }) => {
    // FORM SHOULD BE NOT SEND WITH ENTER KEY
@@ -14,11 +15,13 @@ const SliderDetails = ({ midBanId }) => {
       }
    };
 
+   const [auth_cookie, setAuth_cookie] = useState(Cookies.get("auth_cookie"));
    const imageUrlRef = useRef();
    const imageAltRef = useRef();
    const sorterRef = useRef();
    const imageLinkRef = useRef();
    const imageSituationRef = useRef();
+
    const updater = (e) => {
       e.preventDefault();
       const formData = {
@@ -35,7 +38,7 @@ const SliderDetails = ({ midBanId }) => {
       };
       const url = `https://file-server.liara.run/api/update-slider/${midBanId}`;
       axios
-         .post(url, formData)
+         .post(url, formData,{ headers: { auth_cookie: auth_cookie }})
          .then((d) => {
             formData.situation == "true"
                ? toast.success("اسلایدر با موفقیت به روزرسانی و منتشر شد.", {
@@ -77,9 +80,7 @@ const SliderDetails = ({ midBanId }) => {
 
    useEffect(() => {
       axios
-         .get(
-            `https://file-server.liara.run/api/get-slider/${midBanId}`
-         )
+         .get(`https://file-server.liara.run/api/get-slider/${midBanId}`,{ headers: { auth_cookie: auth_cookie }} )
          .then((d) => {
             setfullData(d.data);
          })
@@ -98,7 +99,7 @@ const SliderDetails = ({ midBanId }) => {
    const remover = () => {
       const url = `https://file-server.liara.run/api/delete-slider/${midBanId}`;
       axios
-         .post(url)
+         .post(url,{ headers: { auth_cookie: auth_cookie }})
          .then((d) => {
             toast.success("اسلایدر با موفقیت حذف شد.", {
                autoClose: 3000,

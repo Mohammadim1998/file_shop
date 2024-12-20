@@ -20,6 +20,13 @@ const page = async () => {
 
     return (
         <div>
+             <>
+                <title>ورود به حساب</title>
+                <meta name="description" content={"ورود به حساب"} />
+                <meta name="robots" content="index, follow" />
+                <link rel="canonical" href={"http://localhost:3000/login"} />
+            </>
+
             <LoginForm />
         </div>
     );

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Box from "./box";
 import Image from "next/image";
+import Cookies from "js-cookie";
 
 const AllPayments = ({ setMidBanDetCtrl, setRandomNumForBannerClick }) => {
     const goTopCtrl = () => {
@@ -11,7 +12,7 @@ const AllPayments = ({ setMidBanDetCtrl, setRandomNumForBannerClick }) => {
             behavior: "smooth",
         });
     };
-
+    const [auth_cookie, setAuth_cookie] = useState(Cookies.get("auth_cookie"));
     const [payments, setPayments] = useState([-1]);
     const [numbersOfBtns, setNumbersOfBtns] = useState([-1]);
     const [filteredBtns, setfilteredBtns] = useState([-1]);
@@ -20,7 +21,7 @@ const AllPayments = ({ setMidBanDetCtrl, setRandomNumForBannerClick }) => {
     const paginate = 2;
 
     useEffect(() => {
-        axios.get(`https://file-server.liara.run/api/payments?pn=${pageNumber}&&pgn=${paginate}`)
+        axios.get(`https://file-server.liara.run/api/payments?pn=${pageNumber}&&pgn=${paginate}`,{ headers: { auth_cookie: auth_cookie }})
             .then(d => {
                 setPayments(d.data.GoalUsers);
                 setNumbersOfBtns(Array.from(Array(Math.ceil(d.data.AllUsersNum / paginate)).keys()));

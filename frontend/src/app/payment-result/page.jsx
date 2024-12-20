@@ -12,7 +12,7 @@ const getAuthData = async (cookieValue) => {
     }
 }
 
-const page = async ({searchParams}) => {
+const page = async ({ searchParams }) => {
     const cookieStore = cookies();
     const auth_cookie = cookieStore.get("auth_cookie");
     const cookieValue = auth_cookie?.value;
@@ -20,6 +20,13 @@ const page = async ({searchParams}) => {
 
     return (
         <section className="container mx-auto p-12 flex justify-center items-center">
+            <>
+                <title>لطفا صبر کنید</title>
+                <meta name="description" content={"لطفا صبر کنید"} />
+                <meta name="robots" content="noindex, nofollow" />
+                <link rel="canonical" href={"http://localhost:3000/payment-result"} />
+            </>
+
             <PaymentResultcom searchParams={searchParams} cookie={cookieValue} />
         </section>
     );

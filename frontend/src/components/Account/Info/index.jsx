@@ -50,7 +50,7 @@ const Info = ({ cookie }) => {
             rePassword: watch("rePassword"),
         }
         const backendUrl = `https://file-server.liara.run/api/update-mini-user/${data._id}`;
-        axios.post(backendUrl, formData)
+        axios.post(backendUrl, formData, { headers: { auth_cookie: cookie } })
             .then((d) => {
                 console.log(d.data);
                 Cookies.set('auth_cookie', d.data.auth, { expires: 60 });
@@ -86,7 +86,7 @@ const Info = ({ cookie }) => {
             activateCode: activateCodeRef.current.value
         }
         const backendUrl = `https://file-server.liara.run/api/confirm-user-email`;
-        axios.post(backendUrl, formData)
+        axios.post(backendUrl, formData, { headers: { auth_cookie: cookie } })
             .then((d) => {
                 console.log(d.data);
                 Cookies.set('auth_cookie', d.data.auth, { expires: 60 });
@@ -153,7 +153,7 @@ const Info = ({ cookie }) => {
             emailSend: input,
         }
         const backendUrl = `https://file-server.liara.run/api/update-email-user`;
-        axios.post(backendUrl, formData)
+        axios.post(backendUrl, formData, { headers: { auth_cookie: cookie } })
             .then((d) => {
                 console.log(d.data);
                 Cookies.set('auth_cookie', d.data.auth, { expires: 60 });
@@ -189,6 +189,15 @@ const Info = ({ cookie }) => {
 
     return (
         <div className="relative flex flex-col gap-8 pt-8">
+            <>
+                <meta charset="utf-8" />
+                <title>اطلاعات من</title>
+                <meta name="description" content="اطلاعات من" />
+                <meta name="robots" content="index, follow" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <link rel="shortcut icon" href="/favicon2.ico" type="image/x-icon" />
+                <link rel="canonical" href="https://localhost:3000/account/info" />
+            </>
             <h3 className="absolute top-1 ring-1 text-lg">اطلاعات من</h3>
 
             <div onClick={() => {

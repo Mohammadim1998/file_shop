@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
-
+import Cookies from "js-cookie";
 
 const NewProduct = () => {
    //FOR SPLIT CATEGORIES
@@ -13,6 +13,7 @@ const NewProduct = () => {
       return value.split("*");
    }
 
+   const [auth_cookie, setAuth_cookie] = useState(Cookies.get("auth_cookie"));
    const titleRef = useRef();
    const slugRef = useRef();
    const mainFileRef = useRef();
@@ -63,7 +64,7 @@ const NewProduct = () => {
    useEffect(() => {
       const productUrl = "https://file-server.liara.run/api/products-rel";
       axios
-         .get(productUrl)
+         .get(productUrl,{ headers: { auth_cookie: auth_cookie }})
          .then((d) => {
             setProducts(d.data);
          })
@@ -85,7 +86,7 @@ const NewProduct = () => {
    useEffect(() => {
       const postsUrl = "https://file-server.liara.run/api/products-categories-rel";
       axios
-         .get(postsUrl)
+         .get(postsUrl,{ headers: { auth_cookie: auth_cookie }})
          .then((d) => {
             setCategories(d.data);
          })
@@ -144,7 +145,7 @@ const NewProduct = () => {
       };
       const url = `https://file-server.liara.run/api/new-product`;
       axios
-         .post(url, formData)
+         .post(url, formData,{ headers: { auth_cookie: auth_cookie }})
          .then((d) => {
             formData.published == "true"
                ? toast.success("محصول با موفقیت منتشر شد.", {

@@ -1,10 +1,12 @@
 "use client";
 import axios from "axios";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
 const newMidBanners = () => {
+    const [auth_cookie, setAuth_cookie] = useState(Cookies.get("auth_cookie"));
     const imageUrlRef = useRef();
     const imageAltRef = useRef();
     const imageLinkRef = useRef();
@@ -21,7 +23,7 @@ const newMidBanners = () => {
         }
 
         const url = "https://file-server.liara.run/api/new-middle-banner";
-        axios.post(url, formData)
+        axios.post(url, formData,{ headers: { auth_cookie: auth_cookie }})
             .then(d => {
                 toast.success("بنر با موفقیت ذخیره شد.", {
                     autoClose: 3000,

@@ -210,7 +210,9 @@ const loginUser = async (req, res) => {
             res.status(422).json({ msg: errors.errors[0].msg });
         } else {
             // CHECK EMAIL EXISTS
-            const emailExist = await User.find({ email: req.body.email });
+            const the_goal_email=req.body.email.toLowerCase();
+            const emailExist = await User.find({ email:the_goal_email  });
+            
             if (emailExist.length > 0) {
                 const theUser = emailExist[0];
                 const data = req.body;

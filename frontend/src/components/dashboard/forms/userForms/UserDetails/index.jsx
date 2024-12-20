@@ -5,8 +5,10 @@ import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
+import Cookies from "js-cookie";
 
 const UserDetails = ({ goalId }) => {
+    const [auth_cookie, setAuth_cookie] = useState(Cookies.get("auth_cookie"));
     const viewedRef = useRef();
     const emailRef = useRef();
     const usernameRef = useRef();
@@ -32,7 +34,7 @@ const UserDetails = ({ goalId }) => {
     useEffect(() => {
         const postsUrl = "https://file-server.liara.run/api/posts-rel";
         axios
-            .get(postsUrl)
+            .get(postsUrl,{ headers: { auth_cookie: auth_cookie }})
             .then((d) => {
                 setPosts(d.data);
             })
@@ -42,7 +44,7 @@ const UserDetails = ({ goalId }) => {
     //Loading default values
     const [fullData, setFullData] = useState("");
     useEffect(() => {
-        axios.get(`https://file-server.liara.run/api/get-user/${goalId}`)
+        axios.get(`https://file-server.liara.run/api/get-user/${goalId}`,{ headers: { auth_cookie: auth_cookie }})
             .then((d) => {
                 setFullData(d.data);
             })
@@ -64,7 +66,7 @@ const UserDetails = ({ goalId }) => {
         }
 
         const url = `https://file-server.liara.run/api/update-user/${goalId}`;
-        axios.post(url, formData)
+        axios.post(url, formData,{ headers: { auth_cookie: auth_cookie }})
             .then((d) => {
                 toast.success("کاربر با موفقیت بروزرسانی شد.", {
                     autoClose: 3000,
@@ -92,7 +94,7 @@ const UserDetails = ({ goalId }) => {
     };
 
     const remover = () => {
-        axios.post(`https://file-server.liara.run/api/delete-user/${goalId}`)
+        axios.post(`https://file-server.liara.run/api/delete-user/${goalId}`,{ headers: { auth_cookie: auth_cookie }})
             .then(d => {
                 toast.success("کاربر با موفقیت حذف شد.", {
                     autoClose: 3000,
@@ -120,7 +122,7 @@ const UserDetails = ({ goalId }) => {
     };
 
     const paymentUnchecker = (goalId) => {
-        axios.get(`https://file-server.liara.run/api/uncheck-payment/${goalId}`)
+        axios.get(`https://file-server.liara.run/api/uncheck-payment/${goalId}`,{ headers: { auth_cookie: auth_cookie }})
             .then(d => {
                 toast.success("به بخش سفارش های افزوده شد", {
                     autoClose: 3000,
@@ -148,7 +150,7 @@ const UserDetails = ({ goalId }) => {
     };
 
     const commentUnchecker = (goalId) => {
-        axios.get(`https://file-server.liara.run/api/uncheck-comment/${goalId}`)
+        axios.get(`https://file-server.liara.run/api/uncheck-comment/${goalId}`,{ headers: { auth_cookie: auth_cookie }})
             .then(d => {
                 toast.success("به بخش سفارش های افزوده شد", {
                     autoClose: 3000,
