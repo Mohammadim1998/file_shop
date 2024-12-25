@@ -220,7 +220,7 @@ const Info = ({ cookie }) => {
                                     <div className="flex flex-col gap-8 bg-zinc-200 w-full text-sm rounded-md p-4">
                                         <form onSubmit={userEmailConfirmer} className="flex flex-col gap-8 items-center">
 
-                                            <div className="w-full flex justify-between items-center gap-4">
+                                            <div className="w-full flex flex-wrap justify-between items-center gap-4">
                                                 <h3 className="text-lg">کدتایید حساب کاربری</h3>
                                                 <div onClick={() => emailAcitvationCodeAgain()} className="cursor-pointer bg-sky-600 text-white rounded px-4 py-2 transition-all duration-300 hover:bg-sky-700 text-xs">ارسال دوباره ایمیل ( {data.activatecodeSendingNumber} )</div>
                                             </div>
@@ -237,7 +237,7 @@ const Info = ({ cookie }) => {
                                     </div>
                                 ) : (<div></div>)}
 
-                            <div className="flex justify-between items-center gap-4">
+                            <div className="flex justify-between items-center gap-4 flex-wrap">
                                 <div className="flex justify-center gap-4 items-center bg-zinc-300 w-60 text-sm h-10 rounded-md p-1">
                                     <div className="">تاریخ ثبت نام</div>:
                                     <div className="">{data.createdAt}</div>
@@ -265,7 +265,7 @@ const Info = ({ cookie }) => {
 
                             <div className="w-full flex flex-col items-center bg-zinc-200 text-sm rounded-md p-4">
                                 <div>به روز رسانی اطلاعات</div>
-                                <form onSubmit={handleSubmit(miniUpdater)} className="flex flex-col gap-8 m-12 w-[30rem] bg-zinc-100 p-12 rounded-md">
+                                <form onSubmit={handleSubmit(miniUpdater)} className="w-full flex flex-col gap-8 m-12 md:w-[30rem] bg-zinc-100 p-12 rounded-md">
                                     <div className="flex flex-col gap-1">
                                         <input type="text"
                                             className="p-2 rounded-md w-full outline-none border-zinc-400 border-2 focus:border-orange-400"
@@ -332,7 +332,7 @@ const Info = ({ cookie }) => {
                                 </form>
                             </div>
 
-                            <div className="w-full flex justify-between items-center bg-zinc-200 text-sm rounded-md p-4">
+                            <div className="w-full flex flex-wrap gap-8 justify-between items-center bg-zinc-200 text-sm rounded-md p-4">
                                 <div className="flex justify-center items-center gap-1 bg-zinc-100 w-60 h-10">
                                     <div>اطلاع رسانی جشنواره ها</div>
                                     {

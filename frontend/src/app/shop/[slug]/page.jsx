@@ -252,7 +252,7 @@ const SingleProduct = async ({ params }) => {
                      </aside>
                   </>)}
                </>)}
-      </div >
+      </div>
    );
 };
 

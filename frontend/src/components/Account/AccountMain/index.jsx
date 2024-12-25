@@ -9,6 +9,8 @@ import Files from "../Files";
 import Comments from "../Comments";
 import Payments from "../Payments";
 import axios from "axios";
+import { BiMenu } from "react-icons/bi";
+import { IoMdClose } from "react-icons/io";
 
 const goTopCtrl = () => {
     window.scrollTo({
@@ -40,7 +42,9 @@ const AccountMain = ({ items }) => {
 
     useEffect(() => {
         setAuth_cookie2(Cookies.get("auth_cookie"));
-    }, [Cookies.get("auth_cookie")]);
+    }, [items.slug[0]]);
+
+    const [menuIsOpen,setMenutIsOpen] = useState(-1);
 
     //TAB
     const [details, setDetails] = useState(<Info cookie={auth_cookie} />);
@@ -61,54 +65,79 @@ const AccountMain = ({ items }) => {
     return (
         <div className="container mx-auto">
             <div className="flex justify-between items-center gap-2">
-                <div className="w-72 min-w-72 bg-zinc-100 p-6 rounded-md sticky top-8 right-0 bottom-8">
-                    <nav className="flex justify-center items-center">
-                        <ul className="w-full flex flex-col gap-4">
-                            <li>
-                                <Link onClick={goTopCtrl} href={"/account/info"}
-                                    className={items.slug[0] == "info"
-                                        ? "rounded-md text-white bg-indigo-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
-                                        : "rounded-md text-white bg-orange-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
-                                    }
-                                >اطلاعات</Link>
-                            </li>
-                            <li>
-                                <Link onClick={goTopCtrl} href={"/account/favorites"}
-                                    className={items.slug[0] == "favorites"
-                                        ? "rounded-md text-white bg-indigo-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
-                                        : "rounded-md text-white bg-orange-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
-                                    }
-                                >مورد علاقه ها</Link>
-                            </li>
-                            <li>
-                                <Link onClick={goTopCtrl} href={"/account/files"}
-                                    className={items.slug[0] == "files"
-                                        ? "rounded-md text-white bg-indigo-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
-                                        : "rounded-md text-white bg-orange-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
-                                    }
-                                >فایل ها</Link>
-                            </li>
-                            <li>
-                                <Link onClick={goTopCtrl} href={"/account/comments"}
-                                    className={items.slug[0] == "comments"
-                                        ? "rounded-md text-white bg-indigo-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
-                                        : "rounded-md text-white bg-orange-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
-                                    }
-                                >دیدگاه ها</Link>
-                            </li>
-                            <li>
-                                <Link onClick={goTopCtrl} href={"/account/payments"}
-                                    className={items.slug[0] == "payments"
-                                        ? "rounded-md text-white bg-indigo-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
-                                        : "rounded-md text-white bg-orange-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
-                                    }
-                                >سفارش ها</Link>
-                            </li>
-                        </ul>
-                    </nav>
+                <div>
+                    <div
+                     className={
+                        menuIsOpen == -1
+                        ? "z-50 w-72 min-w-72 md:bg-zinc-100 bg-[#000000cc] p-6 rounded-none md:rounded-md fixed md:sticky md:top-8 md:bottom-8 py-4 md:py-0 h-[100vh] bottom-0 top-0 left-[100%] -right-[100%] md:left-0 md:right-0 transition-all duration-500"
+                        : "z-50 w-72 min-w-72 md:bg-zinc-100 bg-[#000000cc] p-6 py-4 md:py-0 h-[100vh] rounded-none md:rounded-md fixed top-0 bottom-0 left-6 right-0 md:static transition-all duration-500"
+                     }>
+                      
+                        <nav className="flex justify-center items-center">
+                            <ul className="w-full flex flex-col gap-4">
+                                <li>
+                                    <Link onClick={goTopCtrl} href={"/account/info"}
+                                        className={items.slug[0] == "info"
+                                            ? "rounded-md text-white bg-indigo-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
+                                            : "rounded-md text-white bg-orange-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
+                                        }
+                                    >اطلاعات</Link>
+                                </li>
+                                <li>
+                                    <Link onClick={goTopCtrl} href={"/account/favorites"}
+                                        className={items.slug[0] == "favorites"
+                                            ? "rounded-md text-white bg-indigo-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
+                                            : "rounded-md text-white bg-orange-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
+                                        }
+                                    >مورد علاقه ها</Link>
+                                </li>
+                                <li>
+                                    <Link onClick={goTopCtrl} href={"/account/files"}
+                                        className={items.slug[0] == "files"
+                                            ? "rounded-md text-white bg-indigo-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
+                                            : "rounded-md text-white bg-orange-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
+                                        }
+                                    >فایل ها</Link>
+                                </li>
+                                <li>
+                                    <Link onClick={goTopCtrl} href={"/account/comments"}
+                                        className={items.slug[0] == "comments"
+                                            ? "rounded-md text-white bg-indigo-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
+                                            : "rounded-md text-white bg-orange-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
+                                        }
+                                    >دیدگاه ها</Link>
+                                </li>
+                                <li>
+                                    <Link onClick={goTopCtrl} href={"/account/payments"}
+                                        className={items.slug[0] == "payments"
+                                            ? "rounded-md text-white bg-indigo-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
+                                            : "rounded-md text-white bg-orange-500 transition-all duration-500 hover:bg-indigo-600 flex justify-center items-center w-full h-12"
+                                        }
+                                    >سفارش ها</Link>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
 
-                <div className="w-full p-4 bg-zinc-100 rounded-md">{details}</div>
+                <div className="w-full p-4 bg-zinc-100 rounded-md mt-12 md:mt-0">{details}</div>
+            </div>
+            <div className="z-50 flex md:hidden fixed top-2 left-5">
+                <BiMenu
+                    onClick={() => setMenutIsOpen(menuIsOpen * -1)}
+                    className={
+                        menuIsOpen == -1
+                            ? "w-10 h-10 text-black flex"
+                            : "w-10 h-10 text-black hidden"
+                    } />
+
+                <IoMdClose
+                    onClick={() => setMenutIsOpen(menuIsOpen * -1)}
+                    className={
+                        menuIsOpen == 1
+                            ? "w-10 h-10 text-white flex"
+                            : "w-10 h-10 text-white hidden"
+                    } />
             </div>
         </div>
     );

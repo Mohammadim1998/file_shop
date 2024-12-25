@@ -20,7 +20,7 @@ const Footer = () => {
 
     return (
         <footer className="container mx-auto flex flex-col gap-8 py-6 mt-8">
-            <div className="flex justify-between items-center p-8 bg-zinc-100 rounded-lg">
+            <div className="flex justify-between items-center p-8 bg-zinc-100 rounded-lg flex-col md:flex-row gap-8 md:gap-2">
                 <div className="w-72 max-w-72 flex flex-col gap-4">
                     <div className="flex justify-center">
                         <Image
@@ -33,7 +33,7 @@ const Footer = () => {
                     </div>
                     <p className="text-center text-base sm:text-sm">احان فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته و زمان مورد نیاز شامل حروفچینی</p>
                 </div>
-                <div className="flex justify-around items-start gap-16">
+                <div className="flex justify-around items-start gap-8 sm:gap-16">
                     <div className="flex flex-col gap-4 ">
                         <div className="text-xl ">دسترسی سریع</div>
                         <ul className="flex flex-col gap-4 text-base sm:text-sm">
@@ -86,23 +86,23 @@ const Footer = () => {
                             </li>
                         </ul>
                     </div>
-                    <div className="flex justify-center items-center">
-                        <div className="flex justify-center gap-4 items-center">
-                            <Image
-                                src={"/images/Licenses/1.png"}
-                                className="rounded-lg"
-                                width={120}
-                                height={120}
-                                alt="mernfa logo"
-                            />
-                            <Image
-                                src={"/images/Licenses/2.png"}
-                                className="rounded-lg"
-                                width={120}
-                                height={120}
-                                alt="mernfa logo"
-                            />
-                        </div>
+                </div>
+                <div className="flex justify-center gap-4 items-center">
+                    <div className="flex justify-center gap-4 items-center">
+                        <Image
+                            src={"/images/Licenses/1.png"}
+                            className="rounded-lg"
+                            width={120}
+                            height={120}
+                            alt="mernfa logo"
+                        />
+                        <Image
+                            src={"/images/Licenses/2.png"}
+                            className="rounded-lg"
+                            width={120}
+                            height={120}
+                            alt="mernfa logo"
+                        />
                     </div>
                 </div>
             </div>
@@ -117,7 +117,7 @@ const Footer = () => {
 
                 <Link href={"/cart"} className="fixed ring-4 bottom-4">
                     <div className="relative">
-                        <div className="z-50 absolute -top-4 -right-4 flex justify-center items-center rounded-full w-8 h-8 p-2 bg-indigo-600 text-white">{cartNumber == -1 ? "" : cartNumber}</div>
+                        <div className="z-40 absolute -top-4 -right-4 flex justify-center items-center rounded-full w-8 h-8 p-2 bg-indigo-600 text-white">{cartNumber == -1 ? "" : cartNumber}</div>
                         <HiShoppingCart
                             onClick={() => goTopCtrl()}
                             className="z-40 border-2 border-black w-12 h-12 p-2 rounded-md bg-yellow-500 transition-all duration-500 hover:bg-indigo-400 text-black"

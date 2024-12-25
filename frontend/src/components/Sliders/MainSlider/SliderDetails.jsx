@@ -76,20 +76,21 @@ const SliderDetails = ({ data }) => {
                             className="bg-white w-10 h-10 p-2 rounded border-zinc-800 border-[.2rem] cursor-pointer hover:border-zinc-500 transition-all duration-500"
                         />
                     </div>
-                    <Link href={data[nowSlide].link}
-                        className="z-20 flex justify-center items-center gap-6">
-                        <Image
-                            width={1280}
-                            height={250}
-                            className={
-                                slideHandler == 1
-                                    ? "rounded-xl animate__animated  animate__bounceIn animate__slow"
-                                    : "rounded-xl animate__animated  animate__bounceOut animate__slow"
-                            }
-                            alt={data[nowSlide].imageAlt}
-                            src={data[nowSlide].image}
-                        />
-                    </Link>
+                    {/* <Link href={data[nowSlide].link}> */}
+                        <div className="z-20 flex justify-center items-center gap-6">
+                            <Image
+                                width={1280}
+                                height={250}
+                                className={
+                                    slideHandler == 1
+                                        ? "rounded-xl animate__animated  animate__bounceIn animate__slow"
+                                        : "rounded-xl animate__animated  animate__bounceOut animate__slow"
+                                }
+                                alt={data[nowSlide].imageAlt}
+                                src={data[nowSlide].image}
+                            />
+                        </div>
+                    {/* </Link> */}
                 </>
                 )}
         </section>
